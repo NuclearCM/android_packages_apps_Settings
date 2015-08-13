@@ -232,6 +232,7 @@ public class PrivacySettings extends SettingsPreferenceFragment implements Index
                     }
                 }
 
+                updateResetUserPreferences();
                 dialog.dismiss();
             }
 
