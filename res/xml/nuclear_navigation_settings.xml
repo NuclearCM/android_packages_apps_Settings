@@ -6,11 +6,17 @@
     android:title="@string/navigation_settings_options_title"
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
 
-        <PreferenceScreen
+    <PreferenceScreen
                 android:id="@+id/button_settings"
                 android:title="@string/button_pref_title"
                 android:fragment="com.android.settings.ButtonSettings"
                 android:icon="@drawable/ic_settings_buttons"
                 />
                 
+    <PreferenceScreen
+         android:key="power_menu_general_category"
+        android:fragment="com.android.settings.nuclear.PowerMenuActions"
+         android:title="@string/power_menu_title" />
+
+
 </PreferenceScreen>
