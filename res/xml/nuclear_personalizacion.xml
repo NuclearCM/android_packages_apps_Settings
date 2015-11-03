@@ -16,14 +16,7 @@
                 android:title="@string/interface_settings_title">
          </PreferenceScreen>
 
-         <!-- gesture_anywhere 
-    	<PreferenceScreen
-    		android:key="gesture_anywhere"
-    		android:fragment="com.android.settings.nuclear.gestureanywhere.GestureAnywhereSettings"
-	    	android:title="@string/gesture_anywhere_title" 
-	   		android:icon="@drawable/ic_settings_gestures">
 
-   		</PreferenceScreen>-->
 
       <!-- Gestos -->
         <PreferenceScreen
