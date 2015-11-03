@@ -415,7 +415,7 @@
 
     <!-- Gesture Settings -->
     <!-- Settings main menu entry -->
-    <string name="gesture_settings_title">Gestures</string>
+    <string name="gesture_settings_title">Gestures ScreenOFF</string>
 
     <!-- Power menu -->
     <string name="power_menu_title">Power menu</string>
