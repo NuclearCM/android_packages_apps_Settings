@@ -86,12 +86,18 @@
                 android:icon="@drawable/ic_nuclear_exposed"
                 />  
 
-    <dashboard-tile  
-        android:icon="@drawable/ic_bitsyko_layers_exposed" 
-                android:title="@string/bitsyko_layers_str">
-         <!--   <intent android:targetPackage="com.lovejoy777.rroandlayersmanager" android:action="android.intent.action.MAIN" android:targetClass="com.lovejoy777.rroandlayersmanager.menu" />-->
-        </dashboard-tile> 
-
+                 <!-- Themes -->
+        <!-- NOTE: Intent.parseIntent looks for "categories" tag and not "category" -->
+        <dashboard-tile
+            android:id="@+id/theme_settings"
+            android:title="@string/themes_settings_title"
+            android:icon="@drawable/ic_settings_themes">
+            <intent
+                android:action="android.intent.action.MAIN" >
+                <categories android:name="cyanogenmod.intent.category.APP_THEMES" />
+            </intent>
+        </dashboard-tile>
+               
         <dashboard-tile
                 android:id="@+id/nuclear_ota"
                 android:title="@string/nuclear_ota_title"
@@ -144,17 +150,7 @@
                 android:targetClass="com.cyanogenmod.settings.device.TouchscreenGestureSettings" />
         </dashboard-tile>
 
-        <!-- Themes -->
-        <!-- NOTE: Intent.parseIntent looks for "categories" tag and not "category" -->
-        <dashboard-tile
-            android:id="@+id/theme_settings"
-            android:title="@string/themes_settings_title"
-            android:icon="@drawable/ic_settings_themes">
-            <intent
-                android:action="android.intent.action.MAIN" >
-                <categories android:name="cyanogenmod.intent.category.APP_THEMES" />
-            </intent>
-        </dashboard-tile>
+
 
         <!-- Notifications -->
         <dashboard-tile
@@ -259,14 +255,6 @@
                 android:icon="@drawable/ic_settings_security"
                 />
 
-        <!-- CyanogenMod Privacy Settings -->
-        <!-- This is the 'real' Privacy items and includes Privacy Guard, Blacklist & WhisperPush -->
-        <dashboard-tile
-                android:id="@+id/privacy_settings_cyanogenmod"
-                android:title="@string/privacy_settings_cyanogenmod_title"
-                android:fragment="com.android.settings.cyanogenmod.PrivacySettings"
-                android:icon="@drawable/ic_settings_privacy"
-                />
 
         <!-- Account -->
         <dashboard-tile
