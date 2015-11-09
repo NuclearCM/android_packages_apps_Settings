@@ -33,6 +33,7 @@
             android:dialogTitle="@*android:string/bugreport_title" />
 
     <SwitchPreference
+        android:defaultValue="true"
         android:key="advanced_reboot"
         android:title="@string/advanced_reboot_title"
         android:summary="@string/advanced_reboot_summary" />
