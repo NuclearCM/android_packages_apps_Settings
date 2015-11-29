@@ -40,6 +40,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.android.settings.R;
+import com.android.settings.ButtonSettings;
+import cyanogenmod.providers.CMSettings;
 
 public class ButtonBacklightBrightness extends DialogPreference implements
         SeekBar.OnSeekBarChangeListener {
@@ -68,7 +70,7 @@ public class ButtonBacklightBrightness extends DialogPreference implements
 
         if (isKeyboardSupported()) {
             mKeyboardBrightness = new BrightnessControl(
-                    Settings.System.KEYBOARD_BRIGHTNESS, false);
+                    CMSettings.Secure.KEYBOARD_BRIGHTNESS, false);
             mActiveControl = mKeyboardBrightness;
         }
         if (isButtonSupported()) {
@@ -79,7 +81,7 @@ public class ButtonBacklightBrightness extends DialogPreference implements
                     com.android.internal.R.integer.config_buttonBrightnessSettingDefault);
 
             mButtonBrightness = new BrightnessControl(
-                    Settings.System.BUTTON_BRIGHTNESS, isSingleValue, defaultBrightness);
+                    CMSettings.Secure.BUTTON_BRIGHTNESS, isSingleValue, defaultBrightness);
             mActiveControl = mButtonBrightness;
         }
 
@@ -223,12 +225,18 @@ public class ButtonBacklightBrightness extends DialogPreference implements
 
     public boolean isButtonSupported() {
         final Resources res = getContext().getResources();
-        boolean hasAnyKey = res.getInteger(
-                com.android.internal.R.integer.config_deviceHardwareKeys) != 0;
+        final int deviceKeys = res.getInteger(
+                com.android.internal.R.integer.config_deviceHardwareKeys);
+        // All hardware keys besides volume and camera can possibly have a backlight
+        boolean hasBacklightKey = (deviceKeys & ButtonSettings.KEY_MASK_HOME) != 0
+                || (deviceKeys & ButtonSettings.KEY_MASK_BACK) != 0
+                || (deviceKeys & ButtonSettings.KEY_MASK_MENU) != 0
+                || (deviceKeys & ButtonSettings.KEY_MASK_ASSIST) != 0
+                || (deviceKeys & ButtonSettings.KEY_MASK_APP_SWITCH) != 0;
         boolean hasBacklight = res.getInteger(
                 com.android.internal.R.integer.config_buttonBrightnessSettingDefault) > 0;
 
-        return hasAnyKey && hasBacklight;
+        return hasBacklightKey && hasBacklight;
     }
 
     public boolean isKeyboardSupported() {
@@ -262,13 +270,13 @@ public class ButtonBacklightBrightness extends DialogPreference implements
     }
 
     private int getTimeout() {
-        return Settings.System.getInt(mResolver,
-                Settings.System.BUTTON_BACKLIGHT_TIMEOUT, DEFAULT_BUTTON_TIMEOUT * 1000) / 1000;
+        return CMSettings.Secure.getInt(mResolver,
+                CMSettings.Secure.BUTTON_BACKLIGHT_TIMEOUT, DEFAULT_BUTTON_TIMEOUT * 1000) / 1000;
     }
 
     private void applyTimeout(int timeout) {
-        Settings.System.putInt(mResolver,
-                Settings.System.BUTTON_BACKLIGHT_TIMEOUT, timeout * 1000);
+        CMSettings.Secure.putInt(mResolver,
+                CMSettings.Secure.BUTTON_BACKLIGHT_TIMEOUT, timeout * 1000);
     }
 
     private void updateBrightnessPreview() {
@@ -398,11 +406,11 @@ public class ButtonBacklightBrightness extends DialogPreference implements
             } else if (mSeekBar != null && !persisted) {
                 return mSeekBar.getProgress();
             }
-            return Settings.System.getInt(mResolver, mSetting, mDefaultBrightness);
+            return CMSettings.Secure.getInt(mResolver, mSetting, mDefaultBrightness);
         }
 
         public void applyBrightness() {
-            Settings.System.putInt(mResolver, mSetting, getBrightness(false));
+            CMSettings.Secure.putInt(mResolver, mSetting, getBrightness(false));
         }
 
         /* Behaviors when it's a seekbar */

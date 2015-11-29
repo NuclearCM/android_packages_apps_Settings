@@ -26,7 +26,6 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.MASTER_CLEAR" />
-    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <uses-permission android:name="com.google.android.googleapps.permission.GOOGLE_AUTH" />
     <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -54,8 +53,6 @@
     <uses-permission android:name="android.permission.MOVE_PACKAGE" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <uses-permission android:name="android.permission.BACKUP" />
-    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
-    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
     <uses-permission android:name="android.permission.READ_SYNC_STATS" />
     <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
     <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
@@ -84,6 +81,7 @@
     <uses-permission android:name="cyanogenmod.permission.HARDWARE_ABSTRACTION_ACCESS" />
     <uses-permission android:name="cyanogenmod.permission.FINISH_SETUP" />
     <uses-permission android:name="cyanogenmod.permission.MODIFY_PROFILES" />
+    <uses-permission android:name="cyanogenmod.permission.PROTECTED_APP" />
 
     <application android:label="@string/settings_label"
             android:icon="@mipmap/ic_launcher_settings"
@@ -1650,6 +1648,12 @@
 
         <activity android:name=".EncryptionInterstitial"/>
 
+        <service android:label="ReportingService"
+            android:enabled="true"
+            android:exported="false"
+            android:name=".cmstats.ReportingService">
+        </service>
+
         <!-- Runs in the phone process since it needs access to the Phone object -->
         <activity android:name=".deviceinfo.Status"
                 android:label="@string/device_status_activity_title"
@@ -2280,12 +2284,12 @@
                 <category android:name="android.intent.category.VOICE_LAUNCH" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.SHORTCUT" />
-                </intent-filter>
+            </intent-filter>
             <meta-data android:name="com.android.settings.FRAGMENT_CLASS"
                 android:value="com.android.settings.profiles.ProfilesSettings" />
             <meta-data android:name="com.android.settings.TOP_LEVEL_HEADER_ID"
                 android:resource="@id/profiles_settings" />
-            </activity>
+        </activity>
 
         <!-- Keep compatibility with old shortcuts. -->
         <activity-alias android:name="ProfileSettings"
@@ -2327,6 +2331,24 @@
                 android:resource="@id/display_settings" />
         </activity>
 
+        <!-- Display rotation -->
+        <activity android:name="Settings$DisplayRotationActivity"
+                android:label="@string/display_rotation_title"
+                android:excludeFromRecents="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.settings.DISPLAY_ROTATION_SETTINGS" />
+                <action android:name="com.android.settings.DISPLAY_ROTATION_SETTINGS" />
+                <category android:name="android.intent.category.VOICE_LAUNCH" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.SHORTCUT" />
+            </intent-filter>
+            <meta-data android:name="com.android.settings.FRAGMENT_CLASS"
+                android:value="com.android.settings.cyanogenmod.DisplayRotation" />
+            <meta-data android:name="com.android.settings.TOP_LEVEL_HEADER_ID"
+                android:resource="@id/display_settings" />
+        </activity>
+
         <activity-alias android:name=".livedisplay.LiveDisplay"
                 android:taskAffinity="com.android.settings"
                 android:label="@string/live_display_title"
@@ -2338,6 +2360,37 @@
             <meta-data android:name="com.android.settings.TOP_LEVEL_HEADER_ID"
                        android:resource="@id/display_settings" />
         </activity-alias>
+
+
+        <activity android:name=".cyanogenmod.SpamList" />
+
+        <!-- "Blacklist settings" UI, used only on voice-capable phone devices. -->
+        <activity android:name="Settings$BlacklistSettingsActivity"
+                android:uiOptions="splitActionBarWhenNarrow"
+                android:label="@string/blacklist_title"
+                android:excludeFromRecents="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <meta-data android:name="com.android.settings.FRAGMENT_CLASS"
+                android:value="com.android.settings.blacklist.BlacklistSettings" />
+            <meta-data android:name="com.android.settings.TOP_LEVEL_HEADER_ID"
+                android:resource="@id/security_settings" />
+        </activity>
+
+        <activity-alias android:name=".blacklist.BlacklistSettings"
+                android:taskAffinity="com.android.settings"
+                android:label="@string/blacklist_title"
+                android:targetActivity="Settings$BlacklistSettingsActivity"
+                android:configChanges="orientation|keyboardHidden|screenSize"
+                android:exported="true">
+            <meta-data android:name="com.android.settings.FRAGMENT_CLASS"
+                       android:value="com.android.settings.blacklist.BlacklistSettings" />
+            <meta-data android:name="com.android.settings.TOP_LEVEL_HEADER_ID"
+                       android:resource="@id/security_settings" />
+        </activity-alias>
+
         <!-- CyanogenMod activities End -->
 
         <!-- Pseudo-activity used to provide an intent-filter entry point to encryption settings -->
@@ -2636,6 +2689,25 @@
 
         <activity android:name=".cyanogenmod.PrivacySettings" />
 
+        <activity android:name=".applications.ProtectedAppsActivity"
+                  android:label="@string/protected_apps"
+                  android:excludeFromRecents="true"
+                  android:configChanges="orientation|keyboardHidden|screenSize">
+            <intent-filter>
+                <action android:name=".applications.ProtectedAppsActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".applications.LockPatternActivity"
+                  android:label="@string/protected_apps"
+                  android:excludeFromRecents="true">
+            <intent-filter>
+                <action android:name=".applications.LockPatternActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <receiver android:name=".widget.SettingsAppWidgetProvider"
                 android:label="@string/gadget_title"
                 android:exported="false"
@@ -2664,6 +2736,26 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />$
             </intent-filter>$
         </receiver>
+
+        <!-- Anonymous Statistics -->
+        <receiver android:name=".cmstats.ReportingServiceManager"
+            android:enabled="true"
+            android:exported="false"
+            android:label="ReportingServiceManager">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="com.android.settings.action.TRIGGER_REPORT_METRICS" />
+            </intent-filter>
+        </receiver>
+
+        <service android:label="ReportingService"
+            android:enabled="true"
+            android:exported="false"
+            android:name=".cmstats.ReportingService">
+        </service>
+
+        <service android:name=".cmstats.StatsUploadJobService"
+                 android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <!-- Watch for ContactsContract.Profile changes and update the user's photo.  -->
         <receiver android:name=".users.ProfileUpdateReceiver">
@@ -2811,6 +2903,33 @@
             android:exported="false"
             android:name=".cyanogenmod.LtoService">
         </service>
+
+        <receiver
+            android:name=".cyanogenmod.ProtectedAppsReceiver"
+            android:permission="cyanogenmod.permission.PROTECTED_APP">
+            <intent-filter>
+                <action android:name="cyanogenmod.intent.action.PACKAGE_PROTECTED" />
+            </intent-filter>
+        </receiver>
+
+        <activity android:name=".applications.ProtectedAppsActivity"
+                  android:label="@string/protected_apps"
+                  android:excludeFromRecents="true"
+                  android:configChanges="orientation">
+            <intent-filter>
+                <action android:name=".applications.ProtectedAppsActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".applications.LockPatternActivity"
+                  android:label="@string/protected_apps"
+                  android:excludeFromRecents="true">
+            <intent-filter>
+                <action android:name=".applications.LockPatternActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
     </application>
 </manifest>
