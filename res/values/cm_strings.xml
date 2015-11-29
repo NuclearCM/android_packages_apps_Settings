@@ -41,9 +41,13 @@
     <string name="root_access_adb">ADB only</string>
     <string name="root_access_all">Apps and ADB</string>
 
+    <!-- NFC PreferenceCategory title -->
+    <string name="nfc_title_category">NFC</string>
+
     <!-- About phone screen, CyanogenMod version -->
     <string name="mod_version">CyanogenMod version</string>
     <string name="mod_version_default">Unknown</string>
+    <string name="model_name">Model name</string>
 
     <!-- About phone screen, CyanogenMod Api Level -->
     <string name="mod_api_level">CyanogenMod API level</string>
@@ -52,6 +56,9 @@
     <!-- About phone screen, build date -->
     <string name="build_date">Build date</string>
     <string name="build_date_default" translatable="false">2015-01-01-0000</string>
+
+    <!-- CM Updater -->
+    <string name="cmupdate_settings_title">CyanogenMod updates</string>
 
     <!-- Themes Settings -->
     <!-- Settings main menu entry -->
@@ -203,6 +210,13 @@
     <string name="toggleWimax">WiMAX</string>
     <string name="toggleNfc">NFC</string>
 
+    <!-- Wi-Fi region code -->
+    <string name="wifi_setting_countrycode_title">Wi\u2011Fi region code</string>
+    <!-- Wi-Fi settings screen, setting summary for setting the wifi frequency band [CHAR LIMIT=50]-->
+    <string name="wifi_setting_countrycode_summary">Specify the region code for Wi\u2011Fi</string>
+    <!-- Wi-Fi settings screen, error message when the frequency band could not be set [CHAR LIMIT=50]. -->
+    <string name="wifi_setting_countrycode_error">There was a problem setting the region code.</string>
+
     <!-- Profiles -->
     <string name="profile_menu_delete_title">Delete</string>
     <string name="profile_menu_triggers_title">Modify triggers</string>
@@ -302,12 +316,17 @@
     <!-- Lights settings screen, notification light settings -->
     <string name="notification_light_title">Notification light</string>
     <string name="notification_light_general_title">General</string>
+    <string name="notification_light_advanced_title">Advanced</string>
     <string name="notification_light_applist_title">Apps</string>
     <string name="notification_light_phonelist_title">Phone</string>
     <string name="notification_light_use_custom">Use custom values</string>
     <string name="notification_light_default_value">Default</string>
     <string name="notification_light_missed_call_title">Missed call</string>
     <string name="notification_light_voicemail_title">Voicemail</string>
+    <string name="notification_light_brightness" translatable="false">@string/brightness</string>
+    <string name="notification_light_screen_on">Lights with screen on</string>
+    <string name="notification_light_use_multiple_leds">Multiple LEDs</string>
+    <string name="keywords_lights_brightness_level">dim leds brightness</string>
 
     <!-- Lights settings, LED notification -->
     <string name="led_notification_title">Light settings</string>
@@ -436,9 +455,6 @@
     <string name="disable_navkeys_title">Enable on-screen nav bar</string>
     <string name="disable_navkeys_summary">Enable on-screen navigation bar and disable hardware buttons</string>
 
-    <string name="navigation_ring_title">Navigation ring targets</string>
-    <string name="navigation_ring_message">Tap the edit icon to open the navigation ring for editing.\n\nSelect a target to configure its behavior.\n\nTap the check mark icon to save your changes, or restore to reset the settings to defaults.</string>
-
     <!--- Advanced Settings -->
     <string name="advanced_settings">Advanced settings</string>
     <string name="advanced_settings_summary">Enable more settings options</string>
@@ -539,6 +555,13 @@
     <string name="high_touch_sensitivity_title">High touch sensitivity</string>
     <string name="high_touch_sensitivity_summary">Increase touchscreen sensitivity so it can be used while wearing gloves</string>
 
+    <!-- Display & Lights screen, setting options for LCD density -->
+    <string name="lcd_density">LCD density</string>
+    <string name="dialog_title_lcd_density">LCD density</string>
+    <string name="lcd_density_value_format">%d DPI</string>
+    <string name="lcd_density_default_value_format">%d DPI (default)</string>
+    <string name="restarting_ui">Restarting UI\u2026</string>
+
     <!-- Stylus Icon -->
     <string name="stylus_icon_enabled_title">Show icon when using stylus</string>
     <string name="stylus_icon_enabled_summary">Show the pointer icon when hovering or drawing with the stylus</string>
@@ -582,8 +605,9 @@
     <string name="lto_download_data_wifi_only_on">Over any networks</string>
     <string name="lto_download_data_wifi_only_off">Only over Wi\u2011Fi networks</string>
 
-    <string name="volume_keys_control_ring_stream_title">Volume keys control ringtone volume</string>
-    <string name="volume_keys_control_ring_stream_summary">If on, volume keys control ringtone volume. If off, volume keys control media volume.</string>
+    <string name="volume_keys_control_ring_stream_title">Control ringtone volume</string>
+    <string name="volume_keys_control_ring_stream_summary_on">Volume keys control ringtone volume</string>
+    <string name="volume_keys_control_ring_stream_summary_off">Volume keys control media volume</string>
 
     <string name="category_calibration">Calibration</string>
     <string name="display_and_lights">Display &amp; lights</string>
@@ -682,4 +706,125 @@
     <!-- Advanced reboot options -->
     <string name="advanced_reboot_title">Advanced reboot</string>
     <string name="advanced_reboot_summary">When unlocked, include options in the power menu for rebooting into recovery, bootloader or performing a soft reboot</string>
+
+    <string name="category_interface">Interface</string>
+    <!-- Expanded desktop -->
+    <string name="power_menu_expanded_desktop">Expanded desktop</string>
+    <string name="expanded_hide_nothing">Hide nothing</string>
+    <string name="expanded_hide_status">Hide status bar</string>
+    <string name="expanded_hide_navigation">Hide navigation bar</string>
+    <string name="expanded_hide_both">Hide both</string>
+    <string name="expanded_nothing_to_show">To add a custom per-app configuration for expanded state, set "Enabled for all" to the off position</string>
+    <string name="expanded_desktop_state">Expanded state</string>
+    <string name="expanded_enabled_for_all">Enabled for all</string>
+    <string name="expanded_user_configurable">User configurable</string>
+    <string name="expanded_desktop_style">Expanded desktop style</string>
+    <string name="expanded_desktop_style_description">Choose a default expanded desktop style</string>
+    <string name="expanded_desktop_title">Expanded desktop options</string>
+
+    <!-- Kill app long-press back -->
+    <string name="kill_app_longpress_back">Kill app back button</string>
+    <string name="kill_app_longpress_back_summary">Kill the foreground app by long-pressing the back button</string>
+
+    <!-- Weather in status bar -->
+    <string name="status_bar_show_weather_title">Show weather</string>
+    <string name="status_bar_show_weather_summary">Show the weather in the status bar header</string>
+
+    <!-- Show/Hide Search Bar -->
+    <string name="recents_show_searchbar">Show search bar in recents menu</string>
+    <string name="keywords_recents_show_searchbar">recent recents disable enable show hide search bar searchbar</string>
+
+    <!-- Voice Wakeup -->
+    <string name="voice_wakeup_settings_title">Voice wakeup</string>
+    <string name="voice_wakeup_retrain_title">Retrain your voice</string>
+    <string name="voice_wakeup_activity_title">Activity to launch</string>
+    <string name="voice_wakeup_default_activity">Google Now</string>
+
+    <string name="picker_activities">Activities</string>
+    <string name="select_custom_app_title">Select custom app</string>
+    <string name="select_custom_activity_title">Select custom activity</string>
+
+    <!-- Blacklist preferences -->
+    <string name="blacklist_title">Blocked caller list</string>
+    <string name="blacklist_edit_dialog_title">Edit blocked phone number</string>
+    <string name="blacklist_prefs">Settings</string>
+    <string name="blacklist_button_delete">Delete</string>
+    <string name="blacklist_empty_text">You don\'t have any blocked numbers. Add an entry by touching the Add (+) button.</string>
+    <string name="blacklist_disabled_empty_text">To prevent phone numbers from calling or messaging you, enable the blocked caller list.</string>
+    <string name="blacklist_summary_disabled">Disabled</string>
+    <string name="blacklist_summary">You will not receive incoming calls or messages from phone numbers on the blocked caller list</string>
+    <string name="blacklist_notify">Show notification</string>
+    <string name="blacklist_private_numbers_title">Private numbers</string>
+    <string name="blacklist_private_numbers_summary_disabled">Don\'t block calls from private numbers</string>
+    <string name="blacklist_private_numbers_summary">Block incoming <xliff:g id="type">%s</xliff:g> from private numbers</string>
+    <string name="blacklist_unknown_numbers_title">Unknown numbers</string>
+    <string name="blacklist_unknown_numbers_summary_disabled">Don\'t block calls or messages from numbers not in the contact list</string>
+    <string name="blacklist_unknown_numbers_summary">Block incoming <xliff:g id="type">%s</xliff:g> from numbers not in the contact list</string>
+    <string name="blacklist_summary_type_calls_only">calls</string>
+    <string name="blacklist_summary_type_messages_only">messages</string>
+    <string name="blacklist_summary_type_calls_and_messages">calls and messages</string>
+    <string name="blacklist_regex_title">Use wildcards</string>
+    <string name="blacklist_regex_summary">Use . as a wildcard and * for repetition. E.g. 123.* blocks numbers starting with 123 and .*123.* blocks numbers containing 123</string>
+    <string name="blacklist_policy_block_calls">Block incoming calls</string>
+    <string name="blacklist_policy_block_messages">Block incoming messages</string>
+    <string name="blacklist_bad_number_add">Unable to add invalid phone number to blocked caller list</string>
+
+    <!-- Blacklist management -->
+    <string name="remove_blacklist_number_title">Remove number</string>
+    <string name="remove_blacklist_entry">Do you want to remove this blocked phone number?</string>
+    <string name="select_contact">Select contact</string>
+
+    <!-- Sms security limit -->
+    <string name="app_security_title">App security</string>
+    <string name="sms_security_check_limit_title">SMS message limit</string>
+    <string name="sms_security_check_limit_summary">Display an alert dialog to prevent applications from sending SMS messages too frequently. Current limit: %d messages in 15 minutes</string>
+    <string name="sms_security_check_limit_default">30 (Default)</string>
+
+    <!-- Notification spamfilter -->
+    <string name="spam_added_title">Added %1$s</string>
+    <string name="spam_last_blocked_title">Last blocked %1$s</string>
+    <string name="block_notifications_title">Filter notifications</string>
+    <string name="block_notifications_summary">Manage ignored notifications and filters</string>
+    <string name="no_filters_title">No filters set</string>
+    <string name="app_ops_ignored_count">Denied <xliff:g id="count" example="2 times">%s</xliff:g></string>
+
+    <!-- Anonymous Statistics #CM -->
+    <!-- About device screen, list item title. Takes the user to the screen about opting in or out of anonymous statistics. -->
+    <string name="anonymous_statistics_title">CyanogenMod statistics</string>
+    <string name="anonymous_statistics_summary">Help make CyanogenMod better by opting into anonymous statistics reporting</string>
+    <string name="anonymous_statistics_warning_title">About</string>
+    <string name="anonymous_statistics_warning">Opting into CyanogenMod Statistics will allow non-personal data to be submitted to the
+        developers of CyanogenMod to track unique installations across devices. The information submitted includes an unique identifier,
+        which does not compromise your privacy or personal data. The data is submitted during each boot.\n\nFor an example of the data that is submitted, tap on Preview Data.</string>
+    <string name="enable_reporting_title">Enable reporting</string>
+    <string name="preview_data_title">Preview data</string>
+    <string name="view_stats_title">View stats</string>
+    <string name="anonymous_learn_more">Learn more</string>
+
+    <!-- Anonymous Statistics - Preview -->
+    <string name="preview_id_title">Unique ID</string>
+    <string name="preview_device_title">Device</string>
+    <string name="preview_version_title">Version</string>
+    <string name="preview_country_title">Country</string>
+    <string name="preview_carrier_title">Carrier</string>
+    <string name="stats_collection_title">Stats collection</string>
+    <string name="stats_collection_summary">When enabled, allows metrics collection.</string>
+
+    <!-- Protected apps lockpattern reset button -->
+    <string name="lockpattern_reset_button">Reset pattern</string>
+    <string name="lockpattern_settings_reset_summary">Enter primary email account and associated password to reset pattern lock</string>
+
+    <!-- Protected Apps -->
+    <string name="menu_hidden_apps_delete">Reset</string>
+    <string name="menu_hidden_apps_reset_lock">Reset pattern lock</string>
+    <string name="protected_apps">Protected apps</string>
+    <string name="saving_protected_components">Saving component state\u2026</string>
+    <string name="launch_app">Launch app</string>
+
+    <string name="pa_login_username_hint">Username (email)</string>
+    <string name="pa_login_password_hint">Password</string>
+    <string name="pa_login_submit_button">Sign in</string>
+    <string name="pa_login_checking_password">Checking account\u2026</string>
+    <string name="pa_login_incorrect_login">Login was incorrect</string>
+
 </resources>

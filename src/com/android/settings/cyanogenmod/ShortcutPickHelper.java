@@ -1,4 +1,3 @@
-
 /*
  * Copyright (C) 2011 The CyanogenMod Project
  *
