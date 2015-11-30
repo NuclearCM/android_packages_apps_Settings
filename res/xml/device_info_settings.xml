@@ -17,14 +17,14 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
         android:title="@string/about_settings">
 
-        <!-- System update settings - launches activity -->
+        <!-- System update settings - launches activity
         <PreferenceScreen android:key="system_update_settings"
                 android:title="@string/system_update_settings_list_item_title"
                 android:summary="@string/system_update_settings_list_item_summary">
             <intent android:action="android.settings.SYSTEM_UPDATE_SETTINGS"
                     android:targetPackage="com.cyngn.fota"
                     android:targetClass="com.cyngn.fota.SystemUpdateActivity" />
-        </PreferenceScreen>
+        </PreferenceScreen> -->
 
         <PreferenceScreen android:key="additional_system_update_settings"
                           android:title="@string/additional_system_update_settings_list_item_title">
@@ -33,14 +33,14 @@
                     android:targetClass="@string/additional_system_update_menu" />
         </PreferenceScreen>
 
-        <!-- CyanogenMod Updates -->
+        <!-- CyanogenMod Updates 
         <PreferenceScreen android:key="cm_updates"
                 android:title="@string/cmupdate_settings_title"
                 android:summary="@string/system_update_settings_list_item_summary">
             <intent android:action="android.intent.action.MAIN"
                     android:targetPackage="com.cyanogenmod.updater"
                     android:targetClass="com.cyanogenmod.updater.UpdatesSettings" />
-        </PreferenceScreen>
+        </PreferenceScreen>-->
 
         <!-- Device status - launches activity -->
         <PreferenceScreen android:key="status_info"
@@ -58,13 +58,13 @@
             <intent android:action="android.settings.SHOW_MANUAL" />
         </PreferenceScreen>
 
-        <!-- Anonymous statistics - (CMStats) -->
+        <!-- Anonymous statistics - (CMStats) 
         <PreferenceScreen
             android:key="cmstats"
             android:title="@string/anonymous_statistics_title"
             android:summary="@string/anonymous_statistics_summary"
             android:fragment="com.android.settings.cmstats.AnonymousStats" >
-        </PreferenceScreen>
+        </PreferenceScreen>-->
 
         <!-- Legal Information -->
         <PreferenceScreen
@@ -101,12 +101,12 @@
                 android:title="@string/mod_version"
                 android:summary="@string/mod_version_default" />
 
-        <!-- CyanogenMod API Version -->
+        <!-- CyanogenMod API Version 
         <Preference android:key="mod_api_level"
                 style="?android:preferenceInformationStyle"
                 android:title="@string/mod_api_level"
                 android:summary="@string/mod_api_level_default" />
-
+-->
         <!-- Security patch level -->
         <Preference android:key="security_patch"
                 style="?android:preferenceInformationStyle"
