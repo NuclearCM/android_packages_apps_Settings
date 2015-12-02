@@ -155,24 +155,6 @@
     <string name="link_volume_option_title">Link ring and notification volumes</string>
     <string name="notification_volume_option_title">Notification volume</string>
 
-    <!-- User preferences reset -->
-    <string name="personalization">Personalization</string>
-    <string name="reset_user_preferences_title">Reset preferences</string>
-    <string name="reset_user_preferences_summary">Set PA preferences to their default values</string>
-    <string name="reset_user_preferences_disabled_summary">All PA preferences are already set to their default values</string>
-    <string name="reset_user_preferences_dialog_title">Reset preferences?</string>
-    <string name="reset_user_preferences_dialog_choice_reset">Reset now</string>
-    <string name="reset_user_preferences_dialog_choice_cancel">Cancel</string>
-
-    <!-- Performance App -->
-    <string name="performance_app_title">Do you want to use Kernel Adiutor?</string>
-    <string name="performance_app_message">Use kernel Adiutor or Synapse as performance app</string>
-
-    <!--Synapse-->
-   <string name="synapse_title">Synapse</string>
-   <string name="kernel_adiutor_title">Kernel Adiutor</string>
-    <string name="kernel_adiutor_summary">Tweak kernel parameters. Warning! This may cause instability!</string>
-    
     <!-- About NucleaRomReborn -->
     <string name="about_ns_settings_title">Sobre NRR</string>
     <string name="share_ns">Todo sobre NucleaRomReborn</string>
@@ -204,5 +186,16 @@
     <string name="ns_sourcebase">CyanogenMod</string>
     <string name="ns_sourcebase_sumary">https://github.com/CyanogenMod</string>
 
+    <!-- Status bar greeting -->
+    <string name="status_bar_greeting_category_title">Statusbar greeting</string>
+    <string name="status_bar_greeting_title">Greeting</string>
+    <string name="status_bar_greeting_summary">Display a custom greeting in the status bar after unlocking the device</string>
+    <string name="status_bar_greeting_dialog">Set your greeting</string>
+    <string name="status_bar_greeting_main">NucleaRomReborn ツ</string>
+    <string name="status_bar_greeting_timeout_title">Greeting timeout</string>
+    <!-- Statusbar logo -->
+    <string name="status_bar_logo_title">Show NucleaRomR logo</string>
+    <string name="status_bar_logo_summary">Enable to show NucleaRomR logo on the left side of statusbar</string>
+    <string name="status_bar_logo_color">NRR logo color</string>
 
 </resources>

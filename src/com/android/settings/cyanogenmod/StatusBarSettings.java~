@@ -36,6 +36,7 @@ import com.android.settings.Utils;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settings.search.Indexable;
 import com.android.settings.widget.SeekBarPreferenceCham;
+import com.android.settings.cyanogenmod.CMSystemSettingSwitchPreference
 import net.margaritov.preference.colorpicker.ColorPickerPreference;
 
 import java.util.ArrayList;

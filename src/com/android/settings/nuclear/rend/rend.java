@@ -72,8 +72,8 @@ public class rend extends SettingsPreferenceFragment  {
 	private static final String CATEGORY_PERFORMANCE = "performance_category";
 
 	private static final String KEY_SYNAPSE = "key_synapse";
-	private static final String KEY_KERNEL_ADIUTOR = "key_kernel_adiutor";
-  /*  private static final String KEY_SELINUX = "selinux_switch";
+	/*private static final String KEY_KERNEL_ADIUTOR = "key_kernel_adiutor";
+    private static final String KEY_SELINUX = "selinux_switch";
 
     private static final String SCROLLINGCACHE_PREF = "pref_scrollingcache";
     private static final String SCROLLINGCACHE_PERSIST_PROP = "persist.sys.scrollingcache";
@@ -98,16 +98,6 @@ public class rend extends SettingsPreferenceFragment  {
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.nuclear_rend);
-
-        Boolean checkPerformance = Settings.System.getInt(getContentResolver(), Settings.System.PERFORMANCE_APP, 0) == 1;
-
-        if(checkPerformance) {
-           PreferenceScreen synapse = (PreferenceScreen) findPreference(KEY_SYNAPSE);
-           getPreferenceScreen().removePreference(synapse);
-        } else {
-           PreferenceScreen kernelAdiutor = (PreferenceScreen) findPreference(KEY_KERNEL_ADIUTOR);
-           getPreferenceScreen().removePreference(kernelAdiutor);
-        }
         /*PreferenceScreen prefSet = getPreferenceScreen();
 
         Boolean checkPerformance = Settings.System.getInt(getContentResolver(), Settings.System.PERFORMANCE_APP, 0) == 1;
@@ -143,8 +133,7 @@ public class rend extends SettingsPreferenceFragment  {
         return 1;
     }
 
-    
-    @Override
+    /*@Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         if (preference.getKey().equals(KEY_SYNAPSE)) {
             final String appPackageName = "com.af.synapse";
@@ -170,9 +159,71 @@ public class rend extends SettingsPreferenceFragment  {
                     getActivity().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + appPackageName)));
                 }
                 return true;
+
             }
             return false;
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
-    }
+    }*/
+
+       /* public boolean onPreferenceChange(Preference preference, Object newValue) {
+        
+             
+
+         if (preference == mScrollingCachePref) {
+            if (newValue != null) {
+                SystemProperties.set(SCROLLINGCACHE_PERSIST_PROP, (String)newValue);
+            return true;
+               }
+
+           } else if (preference == mSelinux) {
+            if (newValue.toString().equals("true")) {
+                CMDProcessor.runSuCommand("setenforce 1");
+                mSelinux.setSummary(R.string.selinux_enforcing_title);
+            } else if (newValue.toString().equals("false")) {
+                CMDProcessor.runSuCommand("setenforce 0");
+                mSelinux.setSummary(R.string.selinux_permissive_title);
+            }
+            return true;
+       }
+     
+          return false;
+   }
+          
+
+
+                // === Indexing ===
+
+    public static final BaseSearchIndexProvider SEARCH_INDEX_DATA_PROVIDER =
+            new BaseSearchIndexProvider() {
+
+            @Override
+            public List<SearchIndexableRaw> getRawDataToIndex(Context context, boolean enabled) {
+                final SparseArray<String> keyTitles = allKeyTitles(context);
+                final int N = keyTitles.size();
+                final List<SearchIndexableRaw> result = new ArrayList<SearchIndexableRaw>(N);
+                final Resources res = context.getResources();
+                for (int i = 0; i < N; i++) {
+                    final SearchIndexableRaw data = new SearchIndexableRaw(context);
+                    data.key = keyTitles.valueAt(i);
+                    data.title = res.getString(keyTitles.keyAt(i));
+                    data.screenTitle = res.getString(R.string.nuclear_cat_title);
+                    result.add(data);
+                }
+                return result;
+            }
+
+
+        public List<String> getNonIndexableKeys(Context context) {
+            final ArrayList<String> rt = new ArrayList<String>();
+            if (!Utils.isVoiceCapable(context)) {
+                rt.add(KEY_SYNAPSE);
+                rt.add(KEY_KERNEL_ADIUTOR);
+                rt.add(KEY_SELINUX);
+
+            
+               }
+            return rt;
+        }
+    };*/
 }

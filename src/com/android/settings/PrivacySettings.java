@@ -16,15 +16,10 @@
 
 package com.android.settings;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.backup.IBackupManager;
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.DialogInterface; 
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Process;
 import android.os.RemoteException;
@@ -33,28 +28,15 @@ import android.os.UserHandle;
 import android.os.UserManager;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
-import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceScreen;
 import android.preference.SwitchPreference;
 import android.provider.SearchIndexableResource;
 import android.provider.Settings;
-import android.util.SparseBooleanArray;
 import android.util.Log;
-import android.widget.ListView;
 
 import com.android.internal.logging.MetricsLogger;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settings.search.Indexable;
-import com.android.settings.search.Indexable.SearchIndexProvider;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import com.android.settings.search.BaseSearchIndexProvider;
-import com.android.settings.search.Indexable.SearchIndexProvider;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -66,13 +48,10 @@ import java.util.Set;
  */
 public class PrivacySettings extends SettingsPreferenceFragment implements Indexable {
 
-   // static final String TAG = "PrivacySettings";
-
     // Vendor specific
     private static final String GSETTINGS_PROVIDER = "com.google.settings";
     private static final String BACKUP_DATA = "backup_data";
     private static final String AUTO_RESTORE = "auto_restore";
-    private static final String RESET_PREFERENCES = "user_preferences_reset";
     private static final String CONFIGURE_ACCOUNT = "configure_account";
     private static final String BACKUP_INACTIVE = "backup_inactive";
     private static final String NETWORK_RESET = "network_reset";
@@ -81,11 +60,8 @@ public class PrivacySettings extends SettingsPreferenceFragment implements Index
     private IBackupManager mBackupManager;
     private PreferenceScreen mBackup;
     private SwitchPreference mAutoRestore;
-    private Preference mResetUserPreferences;
     private PreferenceScreen mConfigure;
     private boolean mEnabled;
-
-    private final HashMap<String, String> mResettablePrefs = new HashMap<String, String>();
 
     @Override
     protected int getMetricsCategory() {
@@ -115,18 +91,6 @@ public class PrivacySettings extends SettingsPreferenceFragment implements Index
 
         Set<String> keysToRemove = new HashSet<>();
         getNonVisibleKeys(getActivity(), keysToRemove);
-
-
-        mResetUserPreferences = screen.findPreference(RESET_PREFERENCES);
-        mResetUserPreferences.setShouldDisableView(true);
-        mResetUserPreferences.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-            public boolean onPreferenceClick(Preference preference) {
-                showResetList();
-                return true;
-            }
-        });
-        updateResetUserPreferences();
-
         final int screenPreferenceCount = screen.getPreferenceCount();
         for (int i = screenPreferenceCount - 1; i >= 0; --i) {
             Preference preference = screen.getPreference(i);
@@ -146,8 +110,6 @@ public class PrivacySettings extends SettingsPreferenceFragment implements Index
         if (mEnabled) {
             updateToggles();
         }
-
-        updateResetUserPreferences();
     }
 
     private OnPreferenceChangeListener preferenceChangeListener = new OnPreferenceChangeListener() {
@@ -202,99 +164,6 @@ public class PrivacySettings extends SettingsPreferenceFragment implements Index
         mConfigure.setEnabled(configureEnabled);
         mConfigure.setIntent(configIntent);
         setConfigureSummary(configSummary);
-    }
-
-    private void showResetList() {
-        updateResetUserPreferences();
-        if (mResettablePrefs.size() == 0) {
-            return;
-        }
-
-        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(R.string.reset_user_preferences_dialog_title);
-
-        final CharSequence[] c = mResettablePrefs.values()
-                .toArray(new CharSequence[mResettablePrefs.size()]);
-        builder.setMultiChoiceItems(c, null, null);
-
-        builder.setPositiveButton(R.string.reset_user_preferences_dialog_choice_reset,
-                new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(final DialogInterface dialog, final int which) {
-                final ListView resetList = ((AlertDialog) dialog).getListView();
-
-                final ContentResolver resolver = getContentResolver();
-                final SparseBooleanArray checked = resetList.getCheckedItemPositions();
-                for (int i = 0; i < resetList.getCount(); i++) {
-                    if (checked.get(i)) {
-                        final String value = resetList.getItemAtPosition(i).toString();
-                        Settings.System.putInt(resolver, getKey(value), 0);
-                    }
-                }
-
-                updateResetUserPreferences();
-                dialog.dismiss();
-            }
-
-        });
-
-        builder.setNegativeButton(R.string.reset_user_preferences_dialog_choice_cancel,
-                new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(final DialogInterface dialog, final int which) {
-                dialog.dismiss();
-            }
-
-        });
-
-        builder.create().show();
-    }
-
-    private void updateResetUserPreferences() {
-        mResettablePrefs.clear();
-
-        try {
-            final ContentResolver resolver = getContentResolver();
-            final Resources r = getActivity().getApplicationContext()
-                    .createPackageContext("com.android.systemui", 0).getResources();
-
-            for (final String setting : Settings.System.SETTINGS_TO_RESET) {
-                if (Settings.System.getInt(resolver, setting, 0) != 0) {
-                    final int resId = r.getIdentifier(setting, "string", "com.android.systemui");
-                    if (resId == 0) {
-                        Log.v(TAG, "Missing string for: " + setting);
-                    } else {
-                        try {
-                            final String value = r.getString(resId);
-                            mResettablePrefs.put(setting.toLowerCase(), value);
-                        } catch (final Resources.NotFoundException e) {
-                            Log.e(TAG, "Resource not found for: " + setting, e);
-                        }
-                    }
-                }
-            }
-        } catch (final PackageManager.NameNotFoundException e) {
-            Log.e(TAG, "SystemUI package not found.", e);
-        }
-
-        if (mResetUserPreferences != null) {
-            final boolean enabled = mResettablePrefs.size() > 0;
-            mResetUserPreferences.setEnabled(enabled);
-            mResetUserPreferences.setSummary(enabled ?
-                    R.string.reset_user_preferences_summary :
-                    R.string.reset_user_preferences_disabled_summary);
-        }
-    }
-
-    private String getKey(final String value) {
-        for (final Map.Entry<String, String> entry : mResettablePrefs.entrySet()) {
-            if (value.equals(entry.getValue())) {
-                return entry.getKey();
-            }
-        }
-        return null;
     }
 
     private void setConfigureSummary(String summary) {
