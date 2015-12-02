@@ -21,6 +21,7 @@ import android.app.Dialog;
 import android.app.backup.IBackupManager;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface; 
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -65,7 +66,7 @@ import java.util.Set;
  */
 public class PrivacySettings extends SettingsPreferenceFragment implements Indexable {
 
-    static final String TAG = "PrivacySettings";
+   // static final String TAG = "PrivacySettings";
 
     // Vendor specific
     private static final String GSETTINGS_PROVIDER = "com.google.settings";

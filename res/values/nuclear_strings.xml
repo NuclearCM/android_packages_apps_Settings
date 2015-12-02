@@ -163,4 +163,14 @@
     <string name="reset_user_preferences_dialog_title">Reset preferences?</string>
     <string name="reset_user_preferences_dialog_choice_reset">Reset now</string>
     <string name="reset_user_preferences_dialog_choice_cancel">Cancel</string>
+
+    <!-- Performance App -->
+    <string name="performance_app_title">Do you want to use Kernel Adiutor?</string>
+    <string name="performance_app_message">Use kernel Adiutor or Synapse as performance app</string>
+
+    <!--Synapse-->
+   <string name="synapse_title">Synapse</string>
+   <string name="kernel_adiutor_title">Kernel Adiutor</string>
+    <string name="kernel_adiutor_summary">Tweak kernel parameters. Warning! This may cause instability!</string>
+    
 </resources>

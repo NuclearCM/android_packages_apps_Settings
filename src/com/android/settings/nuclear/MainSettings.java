@@ -27,6 +27,7 @@ import android.provider.Settings;
 import android.util.SparseArray;
 import android.provider.SearchIndexableResource;
 import android.content.Context;
+import android.util.SettingConfirmationHelper;
 
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
@@ -67,6 +68,17 @@ public class MainSettings extends SettingsPreferenceFragment implements Indexabl
         addPreferencesFromResource(R.xml.nuclear_main_settings);
 
         Resources res = getResources();
+
+        SettingConfirmationHelper.request(
+            getActivity(),
+            Settings.System.PERFORMANCE_APP,
+            res.getString(R.string.performance_app_title),
+            res.getString(R.string.performance_app_message),
+            res.getString(R.string.kernel_adiutor_title),
+            res.getString(R.string.synapse_title),
+            null,
+            null
+        );
 
     /*    SettingConfirmationHelper.request(
             getActivity(),
