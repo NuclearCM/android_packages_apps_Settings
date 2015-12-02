@@ -81,6 +81,7 @@ import com.android.settings.applications.UsageAccessDetails;
 import com.android.settings.applications.WriteSettingsDetails;
 import com.android.settings.blacklist.BlacklistSettings;
 import com.android.settings.bluetooth.BluetoothSettings;
+import com.android.settings.contributors.ContributorsCloudFragment;
 import com.android.settings.cyanogenmod.DisplayRotation;
 import com.android.settings.dashboard.DashboardCategory;
 import com.android.settings.dashboard.DashboardSummary;
@@ -370,7 +371,8 @@ public class SettingsActivity extends Activity
             com.android.settings.cyanogenmod.DisplayRotation.class.getName(),
             com.android.settings.cyanogenmod.PrivacySettings.class.getName(),
             MainSettings.class.getName(),
-            BlacklistSettings.class.getName()
+            BlacklistSettings.class.getName(),
+            ContributorsCloudFragment.class.getName()
     };
 
 
@@ -1565,4 +1567,3 @@ public class SettingsActivity extends Activity
     }
 
 }
-
