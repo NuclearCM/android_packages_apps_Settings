@@ -25,6 +25,12 @@
                     android:targetPackage="com.cyngn.fota"
                     android:targetClass="com.cyngn.fota.SystemUpdateActivity" />
         </PreferenceScreen> -->
+ 
+	<!-- NRR Logotype -->
+	<PreferenceScreen android:key="nuclear_logo"
+                          android:fragment="com.android.settings.nuclear.about.about"
+                          android:layout="@layout/nuclear_logo_row" />
+
 
         <PreferenceScreen android:key="additional_system_update_settings"
                           android:title="@string/additional_system_update_settings_list_item_title">
