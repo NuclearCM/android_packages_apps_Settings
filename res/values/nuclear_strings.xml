@@ -269,4 +269,9 @@
       <string name="listview_anticipate_overshoot_interpolator">Anticipate and overshoot</string>
       <string name="listview_bounce_interpolator">Bounce</string>
 
+     <!-- Recents Fullscreen -->
+    <string name="recents_show_fullscreen">Recents in fullscreen</string>
+    <string name="recents_fullscreen_summary_enabled">Recents in fullscreen is enabled</string>
+    <string name="recents_fullscreen_summary_disabled">Recents in fullscreen is disabled</string>
+
 </resources>
