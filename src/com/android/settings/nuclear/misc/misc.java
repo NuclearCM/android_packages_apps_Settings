@@ -16,54 +16,34 @@
 
 package com.android.settings.nuclear.misc;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.ActivityNotFoundException;
-import android.content.ContentResolver;
 import android.content.Context;
-import android.content.DialogInterface;
+import android.content.ContentResolver;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.graphics.Bitmap;
-import android.graphics.Rect;
-import android.net.Uri;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.ListPreference;
+import android.os.Build;
 import android.preference.Preference;
+import android.os.SystemProperties;
+import android.os.UserHandle;
 import android.preference.PreferenceScreen;
-import android.preference.SeekBarPreference;
-import android.provider.MediaStore;
+import android.preference.Preference;
+import android.preference.PreferenceCategory;
+import android.preference.Preference.OnPreferenceChangeListener;
 import android.provider.Settings;
-import android.view.Display;
-import android.view.Window;
-import android.widget.Toast;
 import android.preference.SwitchPreference;
+import com.android.settings.util.Helpers;
+import dalvik.system.VMRuntime;
 
 import com.android.settings.R;
+import com.android.settings.SettingsPreferenceFragment;
+
+import java.util.List;
+import com.android.settings.Utils;
+
 import com.android.internal.logging.MetricsLogger;
 
-import com.android.settings.SettingsPreferenceFragment;
-import com.android.settings.search.BaseSearchIndexProvider;
-import com.android.settings.search.Indexable;
-import com.android.settings.search.SearchIndexableRaw;
-import com.android.settings.Utils;
-import android.util.SparseArray;
-import android.content.res.Resources;
-/*import com.android.settings.util.AbstractAsyncSuCMDProcessor;
-import com.android.settings.util.CMDProcessor;
-import com.android.settings.util.Helpers;*/
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.DataOutputStream;
-
-public class misc extends SettingsPreferenceFragment implements Indexable {
+public class misc extends SettingsPreferenceFragment implements OnPreferenceChangeListener {
 
 	/*    private static final String KEY_SCREN_RECORDER = "screen_recorder";
 
@@ -76,17 +56,62 @@ public class misc extends SettingsPreferenceFragment implements Indexable {
 
     private SwitchPreference mSelinux;*/
 
+    private static final String ENABLE_MULTI_WINDOW_KEY = "enable_multi_window";
+	private static final String MULTI_WINDOW_SYSTEM_PROPERTY = "persist.sys.debug.multi_window";
+	private static final String RESTART_SYSTEMUI = "restart_systemui";
+
+	private SwitchPreference mEnableMultiWindow;
+	private Preference mRestartSystemUI;
+
   @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.nuclear_misc);
 
+        final ContentResolver resolver = getActivity().getContentResolver();
+        mEnableMultiWindow = (SwitchPreference) findPreference(ENABLE_MULTI_WINDOW_KEY);
+        mRestartSystemUI = findPreference(RESTART_SYSTEMUI);
 
     }
+
+    private static boolean showEnableMultiWindowPreference() {
+        return !"user".equals(Build.TYPE);
+    }
+
+    private void setEnableMultiWindow(boolean value) {
+        SystemProperties.set(MULTI_WINDOW_SYSTEM_PROPERTY, String.valueOf(value));
+    }
+
     @Override
     protected int getMetricsCategory() {
-        return 1;
+        return MetricsLogger.DEVELOPMENT;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+        if (preference == mEnableMultiWindow) {
+            if (mEnableMultiWindow.isChecked()) {
+                setEnableMultiWindow(true);
+            } else {
+                setEnableMultiWindow(false);
+            }
+        }
+ 	else if (preference == mRestartSystemUI) {
+           Helpers.restartSystemUI();  
+	}else {
+            return super.onPreferenceTreeClick(preferenceScreen, preference);
+        }
+        return false;
+    }
+
+    public boolean onPreferenceChange(Preference preference, Object value) {
+         return true;
     }
 
            /* // === Indexing ===

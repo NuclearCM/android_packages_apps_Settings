@@ -17,6 +17,13 @@
                 />
 
         <PreferenceScreen
+            android:id="@+id/recents_settings"
+            android:fragment="com.android.settings.nuclear.RecentsSettings"
+            android:title="@string/recents_settings_title"
+            android:icon="@drawable/ic_xd_recents"
+            />
+
+        <PreferenceScreen
             android:key="systemuituner"
             android:title="@string/nuclear_extras_systemuituner"
             android:icon="@drawable/ic_systemui_tuner">

@@ -12,6 +12,14 @@
                 android:fragment="com.android.settings.ButtonSettings"
                 android:icon="@drawable/ic_settings_buttons"
                 />
+
+    <!-- App sidebar -->
+        <PreferenceScreen
+            android:key="app_sidebar"
+            android:fragment="com.android.settings.nuclear.AppSidebar"
+            android:title="@string/app_sidebar_title"
+            android:icon="@drawable/ic_xd_sidebar" 
+            />
                 
    <!-- <PreferenceScreen
          android:key="power_menu_general_category"

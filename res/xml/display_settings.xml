@@ -136,12 +136,6 @@
                     android:title="@string/power_menu_expanded_desktop"
                     android:fragment="com.android.settings.applications.ExpandedDesktopPreferenceFragment" />
 
-            <!-- Search in Recents -->
-            <com.android.settings.cyanogenmod.CMSystemSettingSwitchPreference
-                    android:key="recents_show_search_bar"
-                    android:title="@string/recents_show_searchbar"
-                    android:defaultValue="true" />
-
 	    <!-- Full Screen Recents -->
             <com.android.settings.cyanogenmod.SystemSettingSwitchPreference
 	    android:key="recents_full_screen"
