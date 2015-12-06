@@ -40,7 +40,7 @@
         <PreferenceScreen
                 android:key="secur"
                 android:id="@+id/nuclear_segapp_settings"
-                android:icon="@drawable/ic_settings_privacy_exposed"
+                android:icon="@drawable/ic_settings_privacy"
                 android:fragment="com.android.settings.nuclear.segapp.segapp"
                 android:title="@string/app_security_title">
          </PreferenceScreen>

@@ -108,16 +108,16 @@
             </intent>
         </dashboard-tile>
                
-        <dashboard-tile
+      <!--  <dashboard-tile
                 android:id="@+id/nuclear_ota"
                 android:title="@string/nuclear_ota_title"
                 android:icon="@drawable/ic_nuclearota_exposed">
-              <!--   <intent
+                 <intent
                     android:action="android.intent.action.MAIN"
                     android:targetPackage="com.fusionjack.slimota"
-                    android:targetClass="com.fusionjack.slimota.MainActivity" />-->
+                    android:targetClass="com.fusionjack.slimota.MainActivity" />
         </dashboard-tile>  
-
+-->
         </dashboard-category>
 
     <!-- DEVICE -->
