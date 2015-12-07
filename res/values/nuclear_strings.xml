@@ -151,9 +151,12 @@
     <string name="power_menu_bug_report_disabled">Bug reporting is disabled in development settings</string>
     <string name="power_menu_title">Power menu</string>
 
-        <!-- Linked / unlinked notification volume -->
+     <!-- Sound & Notification Settings -->
+    <!-- Linked / unlinked notification volume -->
     <string name="link_volume_option_title">Link ring and notification volumes</string>
     <string name="notification_volume_option_title">Notification volume</string>
+    <string name="ring_notification_volume_option_title">Ring and notification volume</string>
+
 
     <!-- User preferences reset -->
     <string name="personalization">Personalization</string>
