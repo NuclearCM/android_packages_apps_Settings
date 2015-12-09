@@ -16,6 +16,12 @@
             android:title="@string/enable_multi_window"
             android:summary="@string/enable_multi_window_summary"/> 
 
+        <SwitchPreference
+            android:key="colum_number"
+            android:title="@string/colum_number_title"
+            android:summary="@string/colum_number_summary"
+            android:defaultValue="true"/> 
+
    <!-- <Preference android:key="restart_systemui"
         android:title="@string/restart_systemui" /> -->
 

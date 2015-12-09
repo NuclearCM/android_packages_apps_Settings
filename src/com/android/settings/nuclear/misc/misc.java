@@ -59,9 +59,12 @@ public class misc extends SettingsPreferenceFragment implements OnPreferenceChan
     private static final String ENABLE_MULTI_WINDOW_KEY = "enable_multi_window";
 	private static final String MULTI_WINDOW_SYSTEM_PROPERTY = "persist.sys.debug.multi_window";
 	private static final String RESTART_SYSTEMUI = "restart_systemui";
+    private static final String COLUM_NUMBER = "colum_number";
+    private static int COLUM;
 
 	private SwitchPreference mEnableMultiWindow;
 	private Preference mRestartSystemUI;
+    private SwitchPreference mColumNumber;
 
   @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,6 +75,7 @@ public class misc extends SettingsPreferenceFragment implements OnPreferenceChan
         final ContentResolver resolver = getActivity().getContentResolver();
         mEnableMultiWindow = (SwitchPreference) findPreference(ENABLE_MULTI_WINDOW_KEY);
         mRestartSystemUI = findPreference(RESTART_SYSTEMUI);
+        mColumNumber = (SwitchPreference) findPreference(COLUM_NUMBER);
 
     }
 
@@ -88,6 +92,19 @@ public class misc extends SettingsPreferenceFragment implements OnPreferenceChan
         return MetricsLogger.DEVELOPMENT;
     }
 
+    /*private void setColumns(boolean value){
+
+    }*/
+
+    public int getColumns(){
+        if (mColumNumber.isChecked()) {
+                COLUM=2;
+            }else{
+                COLUM=1;
+            }
+        return COLUM;
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -102,7 +119,15 @@ public class misc extends SettingsPreferenceFragment implements OnPreferenceChan
                 setEnableMultiWindow(false);
             }
         }
- 	else if (preference == mRestartSystemUI) {
+     else if (preference == mColumNumber) {
+            if (mColumNumber.isChecked()) {
+                Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.COLUM_NUMBER, 2);
+            }else{
+                Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.COLUM_NUMBER, 1);
+            }
+ 	}else if (preference == mRestartSystemUI) {
            Helpers.restartSystemUI();  
 	}else {
             return super.onPreferenceTreeClick(preferenceScreen, preference);

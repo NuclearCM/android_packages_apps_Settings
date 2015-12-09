@@ -42,6 +42,8 @@ import com.android.settings.HelpUtils;
 import com.android.settings.InstrumentedFragment;
 import com.android.settings.R;
 import com.android.settings.SettingsActivity;
+import android.provider.Settings;
+
 
 import java.util.List;
 
@@ -50,6 +52,7 @@ public class DashboardSummary extends InstrumentedFragment {
 
     private LayoutInflater mLayoutInflater;
     private ViewGroup mDashboard;
+ //   private int mColums1;
 
     private static final int MSG_REBUILD_UI = 1;
     private Handler mHandler = new Handler() {
