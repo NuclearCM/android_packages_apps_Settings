@@ -395,4 +395,7 @@
     <string name="sizer_message_noselect">Nothing selected.</string>
     <string name="system_app_remover">System App Remover</string>
 
+    <!-- screenshot_delay  -->
+    <string name="powermenu_screenshot_delay_title">Set screenshot delay</string>
+
 </resources>
