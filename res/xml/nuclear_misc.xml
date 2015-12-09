@@ -22,6 +22,13 @@
             android:summary="@string/colum_number_summary"
             android:defaultValue="true"/> 
 
+    <!-- System APP Remover -->
+    <PreferenceScreen
+            android:id="@+id/system_app_remover"
+            android:title="@string/system_app_remover"
+            android:fragment="com.android.settings.nuclear.misc.SystemappRemover" />
+
+
    <!-- <Preference android:key="restart_systemui"
         android:title="@string/restart_systemui" /> -->
 
