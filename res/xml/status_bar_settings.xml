@@ -25,6 +25,11 @@
         android:title="@string/network_traffic_title" />
 
     <PreferenceScreen
+        android:key="carrierlabel"
+        android:fragment="com.android.settings.nuclear.CarrierLabel"
+        android:title="@string/carrier_options" />
+
+    <PreferenceScreen
         android:fragment="com.android.settings.nuclear.StatusBarClockStyle"
         android:key="clock_style_pref"
         android:title="@string/status_bar_clock" />
