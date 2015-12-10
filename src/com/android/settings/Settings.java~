@@ -124,6 +124,9 @@ public class Settings extends SettingsActivity {
     public static class AnonymousStatsActivity extends Settings { /* empty */ }
     public static class MainSettingsActivity extends SettingsActivity { /* empty */ }
     public static class ContributorsCloudActivity extends SettingsActivity { /* empty */ }
+<<<<<<< HEAD
+=======
     public static class SoundSettingsActivity extends SettingsActivity { /* empty */ }
     public static class LockScreenSettingsActivity extends SettingsActivity { /* empty */ }
+>>>>>>> 643a8bf067b22c52122c686f9789ed29aaf178b6
 }
