@@ -397,6 +397,7 @@
 
     <!-- screenshot_delay  -->
     <string name="powermenu_screenshot_delay_title">Set screenshot delay</string>
+    <string name="screenshot_sounds_title">ScreenShot Sound</string>
 
     <!-- Carrier Label -->
     <string name="carrier_options">Carrier Label</string>

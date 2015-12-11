@@ -22,11 +22,18 @@
             android:summary="@string/colum_number_summary"
             android:defaultValue="true"/> 
 
+    <!-- ScreenShot sounds -->
+    <SwitchPreference
+            android:key="screenshot_sounds"
+            android:title="@string/screenshot_sounds_title"
+            android:persistent="false"
+            android:defaultValue="true" />
+
     <!-- System APP Remover -->
-    <PreferenceScreen
+   <!-- <PreferenceScreen
             android:id="@+id/system_app_remover"
             android:title="@string/system_app_remover"
-            android:fragment="com.android.settings.nuclear.misc.SystemappRemover" />
+            android:fragment="com.android.settings.nuclear.misc.SystemappRemover" /> -->
 
 
    <!-- <Preference android:key="restart_systemui"

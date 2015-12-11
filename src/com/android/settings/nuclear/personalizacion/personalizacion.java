@@ -38,6 +38,7 @@ import android.provider.Settings;
 import android.view.Display;
 import android.view.Window;
 import android.widget.Toast;
+import android.preference.SwitchPreference;
 
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;

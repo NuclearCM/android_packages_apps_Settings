@@ -64,7 +64,7 @@
         android:title="@string/power_menu_bug_report_title"
         android:defaultValue="false" />
 
-    <CheckBoxPreference
+    <!-- <CheckBoxPreference
         android:key="silent"
         android:title="@string/power_menu_sound_title"
         android:defaultValue="true" />
@@ -72,7 +72,7 @@
     <CheckBoxPreference
         android:key="voiceassist"
         android:title="@string/power_menu_sound_title"
-        android:defaultValue="true" />
+        android:defaultValue="true" /> -->
 
     <CheckBoxPreference
         android:key="assist"

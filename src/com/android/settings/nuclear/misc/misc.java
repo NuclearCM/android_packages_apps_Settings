@@ -1,5 +1,5 @@
 /*
- *<!-- Copyright (C) 2012-2014 Resurrection Remix ROM Project
+ *<!-- Copyright (C) 2014-2015 NucleaRom
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,14 +16,25 @@
 
 package com.android.settings.nuclear.misc;
 
+import android.app.ActivityManagerNative;
 import android.content.Context;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import com.android.internal.logging.MetricsLogger;
 import android.os.Bundle;
 import android.os.Build;
+import android.os.RemoteException;
+import android.os.ServiceManager;
+import android.os.SystemProperties;
 import android.preference.Preference;
+import android.preference.PreferenceActivity;
+import android.preference.PreferenceCategory;
+import android.preference.PreferenceGroup;
 import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.preference.PreferenceScreen;
@@ -31,15 +42,25 @@ import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.provider.Settings;
+import android.provider.Settings.SettingNotFoundException;
+import android.util.Log;
+import android.view.IWindowManager;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import android.preference.SwitchPreference;
 import com.android.settings.util.Helpers;
 import dalvik.system.VMRuntime;
 
 import com.android.settings.R;
+import com.android.settings.Utils;
 import com.android.settings.SettingsPreferenceFragment;
 
 import java.util.List;
-import com.android.settings.Utils;
 
 import com.android.internal.logging.MetricsLogger;
 
@@ -60,11 +81,14 @@ public class misc extends SettingsPreferenceFragment implements OnPreferenceChan
 	private static final String MULTI_WINDOW_SYSTEM_PROPERTY = "persist.sys.debug.multi_window";
 	private static final String RESTART_SYSTEMUI = "restart_systemui";
     private static final String COLUM_NUMBER = "colum_number";
+    private static final String SCREENSHOT_SOUNDS = "screenshot_sounds";
+ 	
     private static int COLUM;
 
 	private SwitchPreference mEnableMultiWindow;
 	private Preference mRestartSystemUI;
-    private SwitchPreference mColumNumber;
+        private SwitchPreference mColumNumber;
+        private SwitchPreference mScreenshotSounds;
 
   @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,6 +100,7 @@ public class misc extends SettingsPreferenceFragment implements OnPreferenceChan
         mEnableMultiWindow = (SwitchPreference) findPreference(ENABLE_MULTI_WINDOW_KEY);
         mRestartSystemUI = findPreference(RESTART_SYSTEMUI);
         mColumNumber = (SwitchPreference) findPreference(COLUM_NUMBER);
+        mScreenshotSounds = (SwitchPreference) findPreference(SCREENSHOT_SOUNDS);
 
     }
 
@@ -126,6 +151,14 @@ public class misc extends SettingsPreferenceFragment implements OnPreferenceChan
             }else{
                 Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.COLUM_NUMBER, 1);
+            }
+        }else if (preference == mScreenshotSounds) {
+ 	      if (mScreenshotSounds.isChecked()) {
+                Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.SCREENSHOT_SOUNDS, 2);
+            }else{
+                Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.SCREENSHOT_SOUNDS, 1);
             }
  	}else if (preference == mRestartSystemUI) {
            Helpers.restartSystemUI();  
