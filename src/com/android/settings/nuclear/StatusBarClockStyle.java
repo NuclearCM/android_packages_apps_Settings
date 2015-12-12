@@ -285,6 +285,23 @@ public class StatusBarClockStyle extends SettingsPreferenceFragment
         return false;
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.add(0, MENU_RESET, 0, R.string.reset)
+                .setIcon(R.drawable.ic_settings_reset)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case MENU_RESET:
+                showDialogInner(DLG_RESET);
+                return true;
+             default:
+                return super.onContextItemSelected(item);
+        }
+    }
 
       private void enableStatusBarClockDependents() {
         int clockStyle = CMSettings.System.getInt(getActivity()
@@ -365,7 +382,6 @@ public class StatusBarClockStyle extends SettingsPreferenceFragment
                         public void onClick(DialogInterface dialog, int which) {
                             Settings.System.putInt(getActivity().getContentResolver(),
                                 Settings.System.STATUSBAR_CLOCK_COLOR, -2);
-                            getOwner().createCustomView();
                         }
                     })
                     .create();
