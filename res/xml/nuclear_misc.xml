@@ -26,7 +26,6 @@
     <SwitchPreference
             android:key="screenshot_sounds"
             android:title="@string/screenshot_sounds_title"
-            android:persistent="false"
             android:defaultValue="true" />
 
     <!-- System APP Remover -->
