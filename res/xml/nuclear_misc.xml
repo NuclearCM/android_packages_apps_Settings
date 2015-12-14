@@ -6,9 +6,6 @@
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings"
     android:title="@string/misc_category_title" >
 
-    <PreferenceCategory
-        android:key="multiwindow"
-        android:title="@string/multiwindow_category" >
     <Preference
             android:key="warning_multi_window"
             android:summary="@string/warning_multi_window_text"
@@ -18,33 +15,13 @@
             android:key="enable_multi_window"
             android:title="@string/enable_multi_window"
             android:summary="@string/enable_multi_window_summary"/> 
-    </PreferenceCategory>
 
-    <PreferenceCategory
-        android:key="selinuxmode"
-        android:title="@string/selinuxmode_category" >
-    <!-- SELinux -->
-        <Preference
-            android:key="selinux_switch"
-            android:title="@string/selinux_switch_title"
-            android:summary="@string/selinux_switch_summary"
-            android:selectable="false"/>
-
-        <SwitchPreference
-            android:key="selinux"
-            android:title="@string/selinux_title"
-            android:defaultValue="false" />
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:key="misc_others"
-        android:title="@string/misc_others_category" >
-    <!-- Number of Colums Settings -->
         <SwitchPreference
             android:key="colum_number"
             android:title="@string/colum_number_title"
             android:summary="@string/colum_number_summary"
             android:defaultValue="true"/> 
+
     <!-- ScreenShot sounds -->
     <SwitchPreference
             android:key="screenshot_sounds"
@@ -58,7 +35,8 @@
             android:title="@string/system_app_remover"
             android:fragment="com.android.settings.nuclear.misc.SystemappRemover" /> -->
 
+
    <!-- <Preference android:key="restart_systemui"
         android:title="@string/restart_systemui" /> -->
-    </PreferenceCategory>
+
 </PreferenceScreen>

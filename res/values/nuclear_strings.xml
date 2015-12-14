@@ -424,11 +424,6 @@
     <string name="icons_category">Status Bar Icons</string>
     <string name="misc_category">Misc Statusbar Settings</string>
 
-    <!--Misc Categorys-->
-    <string name="multiwindow_category">MultiWindow Settings</string>
-    <string name="selinuxmode_category">Selinux Mode</string>
-    <string name="misc_others_category">Others</string>
-
     <!-- Statusbar NRR logo -->
     <string name="status_bar_logo">NucleaRomReborn logo</string>
     <string name="status_bar_nrr_logo_title">NRR logo</string>
@@ -436,12 +431,5 @@
     <string name="status_bar_nrr_logo_color">NRR logo color</string>
     <string name="nrr_logo_cat">NucleaRomReborn</string>
     <string name="nrr_logo_cat_default">NucleaRomReborn Logo</string>
-
-    <!-- Selinux Switch -->
-    <string name="selinux_switch_title">Selinux Switch options</string>
-    <string name="selinux_switch_summary">SELinux is a set of kernel modifications and user-space tools. Changing modes can cause unwanted effects. Use at your own risk</string>
-    <string name="selinux_title">Selinux Mode</string>
-    <string name="selinux_permissive_title">Permissive</string>
-    <string name="selinux_enforcing_title">Enforcing</string>
 
 </resources>
