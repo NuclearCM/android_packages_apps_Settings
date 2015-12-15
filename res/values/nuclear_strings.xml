@@ -432,4 +432,8 @@
     <string name="nrr_logo_cat">NucleaRomReborn</string>
     <string name="nrr_logo_cat_default">NucleaRomReborn Logo</string>
 
+    <!-- Three-fingers-swipe to screenshot -->
+    <string name="three_finger_gesture">Three finger gesture</string>
+    <string name="three_finger_gesture_summary">Swipe three finger to screenshot</string>
+
 </resources>
