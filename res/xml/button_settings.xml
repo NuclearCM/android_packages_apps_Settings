@@ -65,7 +65,7 @@
         <PreferenceScreen
             android:key="power_menu"
             android:title="@string/power_menu_title"
-            android:fragment="com.android.settings.cyanogenmod.PowerMenuActions" />
+            android:fragment="com.android.settings.nuclear.PowerMenuActions" />
 
         <SwitchPreference
             android:key="power_end_call"

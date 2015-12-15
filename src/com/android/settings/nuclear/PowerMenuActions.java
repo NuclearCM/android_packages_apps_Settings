@@ -17,31 +17,44 @@
 package com.android.settings.nuclear;
 
 import android.content.Context;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.UserInfo;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.preference.Preference;
-import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 import android.preference.SwitchPreference;
+import android.preference.ListPreference;
+import android.preference.Preference.OnPreferenceChangeListener;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 
+import com.android.internal.logging.MetricsLogger;
 import com.android.settings.R;
+import com.android.settings.SettingsPreferenceFragment;
 import com.android.internal.util.cm.PowerMenuConstants;
+import cyanogenmod.providers.CMSettings;
+
 import static com.android.internal.util.cm.PowerMenuConstants.*;
+import com.android.settings.widget.NumberPickerPreference;
 
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PowerMenuActions extends PreferenceFragment {
+public class PowerMenuActions extends SettingsPreferenceFragment
+        implements OnPreferenceChangeListener {
+    final static String TAG = "PowerMenuActions";
 
     private SwitchPreference mPowerPref;
     private SwitchPreference mRebootPref;
     private SwitchPreference mScreenshotPref;
+    private SwitchPreference mScreenrecordPref;
+    private SwitchPreference mProfilePref;
     private SwitchPreference mAirplanePref;
     private SwitchPreference mUsersPref;
     private SwitchPreference mSettingsPref;
@@ -51,10 +64,23 @@ public class PowerMenuActions extends PreferenceFragment {
     private SwitchPreference mBugReportPref;
     private SwitchPreference mSilentPref;
 
+
+    private static final String SCREENSHOT_DELAY = "screenshot_delay";
+
     Context mContext;
     private ArrayList<String> mLocalUserConfig = new ArrayList<String>();
     private String[] mAvailableActions;
     private String[] mAllActions;
+
+
+    private NumberPickerPreference mScreenshotDelay;
+
+    private ContentResolver mCr;
+    private PreferenceScreen mPrefSet;
+
+    private static final int MIN_DELAY_VALUE = 1;
+    private static final int MAX_DELAY_VALUE = 30;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,12 +89,16 @@ public class PowerMenuActions extends PreferenceFragment {
         addPreferencesFromResource(R.xml.nuclear_settings_power);
         mContext = getActivity().getApplicationContext();
 
+        mPrefSet = getPreferenceScreen();
+
+        mCr = getActivity().getContentResolver();
+
         mAvailableActions = getActivity().getResources().getStringArray(
                 R.array.power_menu_actions_array);
         mAllActions = PowerMenuConstants.getAllActions();
 
         for (String action : mAllActions) {
-            // Remove preferences not present in the overlay
+        // Remove preferences not present in the overlay
             if (!isActionAllowed(action)) {
                 getPreferenceScreen().removePreference(findPreference(action));
                 continue;
@@ -80,6 +110,8 @@ public class PowerMenuActions extends PreferenceFragment {
                 mRebootPref = (SwitchPreference) findPreference(GLOBAL_ACTION_KEY_REBOOT);
             } else if (action.equals(GLOBAL_ACTION_KEY_SCREENSHOT)) {
                 mScreenshotPref = (SwitchPreference) findPreference(GLOBAL_ACTION_KEY_SCREENSHOT);
+            } else if (action.equals(GLOBAL_ACTION_KEY_SCREENRECORD)) {
+                mScreenrecordPref = (SwitchPreference) findPreference(GLOBAL_ACTION_KEY_SCREENRECORD);
             } else if (action.equals(GLOBAL_ACTION_KEY_AIRPLANE)) {
                 mAirplanePref = (SwitchPreference) findPreference(GLOBAL_ACTION_KEY_AIRPLANE);
             } else if (action.equals(GLOBAL_ACTION_KEY_USERS)) {
@@ -99,7 +131,22 @@ public class PowerMenuActions extends PreferenceFragment {
             }
         }
 
+        mScreenshotDelay = (NumberPickerPreference) mPrefSet.findPreference(
+                SCREENSHOT_DELAY);
+        mScreenshotDelay.setOnPreferenceChangeListener(this);
+        mScreenshotDelay.setMinValue(MIN_DELAY_VALUE);
+        mScreenshotDelay.setMaxValue(MAX_DELAY_VALUE);
+        int ssDelay = Settings.System.getInt(mCr,
+                Settings.System.SCREENSHOT_DELAY, 1);
+        mScreenshotDelay.setCurrentValue(ssDelay);
+
+
         getUserConfig();
+    }
+
+    @Override
+    protected int getMetricsCategory() {
+        return MetricsLogger.DONT_TRACK_ME_BRO;
     }
 
     @Override
@@ -118,6 +165,10 @@ public class PowerMenuActions extends PreferenceFragment {
             mScreenshotPref.setChecked(settingsArrayContains(GLOBAL_ACTION_KEY_SCREENSHOT));
         }
 
+        if (mScreenrecordPref != null) {
+            mScreenrecordPref.setChecked(settingsArrayContains(GLOBAL_ACTION_KEY_SCREENRECORD));
+        }
+
 
         if (mAirplanePref != null) {
             mAirplanePref.setChecked(settingsArrayContains(GLOBAL_ACTION_KEY_AIRPLANE));
@@ -126,7 +177,6 @@ public class PowerMenuActions extends PreferenceFragment {
         if (mUsersPref != null) {
             if (!UserHandle.MU_ENABLED || !UserManager.supportsMultipleUsers()) {
                 getPreferenceScreen().removePreference(findPreference(GLOBAL_ACTION_KEY_USERS));
-                mUsersPref = null;
             } else {
                 List<UserInfo> users = ((UserManager) mContext.getSystemService(
                         Context.USER_SERVICE)).getUsers();
@@ -170,7 +220,7 @@ public class PowerMenuActions extends PreferenceFragment {
     }
 
     @Override
-    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, @NonNull Preference preference) {
+    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         boolean value;
 
         if (preference == mPowerPref) {
@@ -184,6 +234,10 @@ public class PowerMenuActions extends PreferenceFragment {
         } else if (preference == mScreenshotPref) {
             value = mScreenshotPref.isChecked();
             updateUserConfig(value, GLOBAL_ACTION_KEY_SCREENSHOT);
+
+        } else if (preference == mScreenrecordPref) {
+            value = mScreenrecordPref.isChecked();
+            updateUserConfig(value, GLOBAL_ACTION_KEY_SCREENRECORD);
 
         } else if (preference == mAirplanePref) {
             value = mAirplanePref.isChecked();
@@ -223,6 +277,18 @@ public class PowerMenuActions extends PreferenceFragment {
         return true;
     }
 
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        if (preference == mScreenshotDelay) {
+            int value = Integer.parseInt(newValue.toString());
+            Settings.System.putInt(mCr, Settings.System.SCREENSHOT_DELAY,
+                    value);
+            return true;
+        }
+        return false;
+    }
+
+
     private boolean settingsArrayContains(String preference) {
         return mLocalUserConfig.contains(preference);
     }
@@ -248,8 +314,19 @@ public class PowerMenuActions extends PreferenceFragment {
     }
 
     private void updatePreferences() {
-        boolean bugreport = Settings.Secure.getInt(getActivity().getContentResolver(),
+        boolean bugreport = Settings.Secure.getInt(getContentResolver(),
                 Settings.Secure.BUGREPORT_IN_POWER_MENU, 0) != 0;
+        boolean profiles = CMSettings.System.getInt(getContentResolver(),
+                CMSettings.System.SYSTEM_PROFILES_ENABLED, 1) != 0;
+
+        if (mProfilePref != null) {
+            mProfilePref.setEnabled(profiles);
+            if (profiles) {
+                mProfilePref.setSummary(null);
+            } else {
+                mProfilePref.setSummary(R.string.power_menu_profiles_disabled);
+            }
+        }
 
         if (mBugReportPref != null) {
             mBugReportPref.setEnabled(bugreport);
@@ -264,8 +341,8 @@ public class PowerMenuActions extends PreferenceFragment {
     private void getUserConfig() {
         mLocalUserConfig.clear();
         String[] defaultActions;
-        String savedActions = Settings.Global.getStringForUser(mContext.getContentResolver(),
-                Settings.Global.POWER_MENU_ACTIONS, UserHandle.USER_CURRENT);
+        String savedActions = CMSettings.Secure.getStringForUser(mContext.getContentResolver(),
+                CMSettings.Secure.POWER_MENU_ACTIONS, UserHandle.USER_CURRENT);
 
         if (savedActions == null) {
             defaultActions = mContext.getResources().getStringArray(
@@ -300,8 +377,8 @@ public class PowerMenuActions extends PreferenceFragment {
             }
         }
 
-        Settings.Global.putStringForUser(getActivity().getContentResolver(),
-                 Settings.Global.POWER_MENU_ACTIONS, s.toString(), UserHandle.USER_CURRENT);
+        CMSettings.Secure.putStringForUser(getContentResolver(),
+                CMSettings.Secure.POWER_MENU_ACTIONS, s.toString(), UserHandle.USER_CURRENT);
         updatePowerMenuDialog();
     }
 
