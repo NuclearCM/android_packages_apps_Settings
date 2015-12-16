@@ -5,7 +5,9 @@
 
     <!-- Network Traffic-->
     <declare-styleable name="SeekBarPreference">
-		<attr name="netMin" format="integer" />
+	<attr name="netMin" format="integer" />
+        <attr name="interval" format="integer" />
+        <attr name="minimum" format="integer" />
     	<attr name="netUnitsLeft" format="string" />
     	<attr name="netUnitsRight" format="string" />
     	<attr name="unitsLeft" format="string" />
