@@ -44,7 +44,6 @@ import com.android.settings.InstrumentedFragment;
 import com.android.settings.R;
 import com.android.settings.SettingsActivity;
 import android.provider.Settings;
-
 import com.android.settings.widget.SwitchBar;
 
 import java.util.List;
