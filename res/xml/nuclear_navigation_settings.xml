@@ -21,6 +21,14 @@
             android:icon="@drawable/ic_xd_sidebar" 
             />
                 
+        <!--PA Pie Control -->
+        <PreferenceScreen
+             android:key="pa_pie_control"
+             android:title="@string/pa_pie_control_title"
+             android:fragment="com.android.settings.paranoid.PieControl"
+             android:layout="@layout/preference_nuclearextra_papie" 
+             />
+
    <!-- <PreferenceScreen
          android:key="power_menu_general_category"
         android:fragment="com.android.settings.nuclear.PowerMenuActions"

@@ -78,7 +78,7 @@
 
     </PreferenceCategory>
 
-    <!-- <PreferenceCategory
+    <PreferenceCategory
         android:key="weather"
         android:title="@string/weather_category" >
     <com.android.settings.cyanogenmod.CMSystemSettingSwitchPreference
@@ -86,7 +86,7 @@
         android:title="@string/status_bar_show_weather_title"
         android:summary="@string/status_bar_show_weather_summary"
         android:defaultValue="true" />
-    </PreferenceCategory> -->
+    </PreferenceCategory>
 
     <PreferenceCategory
         android:key="misc"
