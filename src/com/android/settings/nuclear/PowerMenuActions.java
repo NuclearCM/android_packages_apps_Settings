@@ -153,10 +153,6 @@ public class PowerMenuActions extends SettingsPreferenceFragment
     public void onStart() {
         super.onStart();
 
-        if (mPowerPref != null) {
-            mPowerPref.setChecked(settingsArrayContains(GLOBAL_ACTION_KEY_POWER));
-        }
-
         if (mRebootPref != null) {
             mRebootPref.setChecked(settingsArrayContains(GLOBAL_ACTION_KEY_REBOOT));
         }
@@ -223,11 +219,7 @@ public class PowerMenuActions extends SettingsPreferenceFragment
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         boolean value;
 
-        if (preference == mPowerPref) {
-            value = mPowerPref.isChecked();
-            updateUserConfig(value, GLOBAL_ACTION_KEY_POWER);
-
-        } else if (preference == mRebootPref) {
+        if (preference == mRebootPref) {
             value = mRebootPref.isChecked();
             updateUserConfig(value, GLOBAL_ACTION_KEY_REBOOT);
 
