@@ -23,14 +23,4 @@
             android:icon="@drawable/ic_xd_recents"
             />
 
-        <PreferenceScreen
-            android:key="systemuituner"
-            android:title="@string/nuclear_extras_systemuituner"
-            android:icon="@drawable/ic_systemui_tuner">
-            <intent
-                android:action="android.intent.action.MAIN"
-                android:targetPackage="com.android.systemui"
-                android:targetClass="com.android.systemui.tuner.TunerActivity" />
-       </PreferenceScreen>
-
 </PreferenceScreen>
