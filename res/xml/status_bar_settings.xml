@@ -101,8 +101,8 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:key="misc"
-        android:title="@string/misc_category" >
+        android:key="brightness"
+        android:title="@string/brightness_category" >
      <com.android.settings.cyanogenmod.CMSystemSettingSwitchPreference
         android:key="status_bar_brightness_control"
         android:title="@string/status_bar_toggle_brightness"
@@ -121,7 +121,11 @@
          android:summary="@string/brightness_icon_summary"
          android:dependency="qs_show_brightness_slider"
          android:defaultValue="true"/>
+    </PreferenceCategory>
 
+    <PreferenceCategory
+        android:key="misc"
+        android:title="@string/misc_category" >
      <com.android.settings.cyanogenmod.CMSystemSettingSwitchPreference
         android:key="status_bar_notif_count"
         android:title="@string/status_bar_notif_count_title"
@@ -133,6 +137,12 @@
         android:title="@string/status_bar_quick_qs_pulldown_title"
         android:summary="@string/status_bar_quick_qs_pulldown_summary"
         android:defaultValue="true" />
+
+    <com.android.settings.cyanogenmod.SystemSettingSwitchPreference
+         android:key="persist_add"
+         android:title="@string/persist_add_title"
+         android:summary="@string/persist_add_summary"
+         android:defaultValue="true"/>
 
     </PreferenceCategory>
 </PreferenceScreen>

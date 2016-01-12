@@ -1013,7 +1013,7 @@
                  <b>Last update:</b> <xliff:g id="date">%3$s</xliff:g>]]></string>
     <string name="category_sounds">Sounds</string>
     <string name="notification_manager">Notifications</string>
-    <string name="lockscreen_settings">Lock screen</string>
+    <string name="lockscreen_settings">Unlock Settings</string>
     <string name="category_lights">Lights</string>
     <string name="category_volume">Volume</string>
     <string name="category_vibrate">Vibrate</string>

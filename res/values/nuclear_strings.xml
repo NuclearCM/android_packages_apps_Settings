@@ -427,6 +427,7 @@
     <string name="weather_category">Weather Settings</string>
     <string name="icons_category">Status Bar Icons</string>
     <string name="misc_category">Misc Statusbar Settings</string>
+    <string name="brightness_category">Brightness Statusbar Settings</string>    
 
     <!-- Statusbar NRR logo -->
     <string name="status_bar_logo">NucleaRomReborn logo</string>
@@ -886,5 +887,9 @@
     <!-- Quick unlock -->
     <string name="unlock_quick_unlock_control_title">Quick unlock</string>
     <string name="unlock_quick_unlock_control_summary">Unlock automatically when the correct PIN/password is entered</string>
+
+    <!--Persist Add Tiles Button-->
+    <string name="persist_add_title">Persist Add Tiles Icon </string>
+    <string name="persist_add_summary">Enable/Disable This Switch make Add Tiles Icon Visible even With Brightness Slider Disabled</string>
 
 </resources>
