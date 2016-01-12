@@ -26,10 +26,13 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.PreferenceFragment;
+import android.preference.SwitchPreference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.provider.SearchIndexableResource;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
+import android.preference.PreferenceScreen;
 import android.text.format.DateFormat;
 import android.view.View;
 /*import android.widget.EditText;*/
@@ -40,6 +43,7 @@ import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.Utils;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settings.search.Indexable;
+import com.android.internal.util.nuclear.NuclearUtils;
 
 import java.util.ArrayList;
 /*import java.util.Date;*/
@@ -52,6 +56,9 @@ public class StatusBarSettings extends SettingsPreferenceFragment
         implements OnPreferenceChangeListener, Indexable {
 
     private static final String TAG = "StatusBar";
+
+    private static final String SHOW_FOURG = "show_fourg";
+    private SwitchPreference mShowFourG;
 
    /* private static final String STATUS_BAR_CLOCK_STYLE = "status_bar_clock";
     private static final String STATUS_BAR_AM_PM = "status_bar_am_pm";
@@ -76,11 +83,19 @@ public class StatusBarSettings extends SettingsPreferenceFragment
     private ListPreference mStatusBarBattery;
     private ListPreference mStatusBarBatteryShowPercent;
 
+    private boolean mCheckPreferences;
+
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
+	createCustomView();
+    }
+   
+    private PreferenceScreen createCustomView() {
+	mCheckPreferences = false;
         addPreferencesFromResource(R.xml.status_bar_settings);
 
+	PreferenceScreen prefSet = getPreferenceScreen();
         ContentResolver resolver = getActivity().getContentResolver();
 
       /*  mStatusBarClock = (ListPreference) findPreference(STATUS_BAR_CLOCK_STYLE);
@@ -88,6 +103,15 @@ public class StatusBarSettings extends SettingsPreferenceFragment
         mStatusBarDate = (ListPreference) findPreference(STATUS_BAR_DATE);
         mStatusBarDateStyle = (ListPreference) findPreference(STATUS_BAR_DATE_STYLE);
         mStatusBarDateFormat = (ListPreference) findPreference(STATUS_BAR_DATE_FORMAT);*/
+
+	mShowFourG = (SwitchPreference) findPreference(SHOW_FOURG);
+        if (NuclearUtils.isWifiOnly(getActivity())) {
+            prefSet.removePreference(mShowFourG);
+        } else {
+        mShowFourG.setChecked((Settings.System.getInt(resolver,
+                Settings.System.SHOW_FOURG, 0) == 1));
+        }
+
         mStatusBarBattery = (ListPreference) findPreference(STATUS_BAR_BATTERY_STYLE);
         mStatusBarBatteryShowPercent =
                 (ListPreference) findPreference(STATUS_BAR_SHOW_BATTERY_PERCENT);
@@ -142,6 +166,10 @@ public class StatusBarSettings extends SettingsPreferenceFragment
         mStatusBarBatteryShowPercent.setSummary(mStatusBarBatteryShowPercent.getEntry());
         enableStatusBarBatteryDependents(batteryStyle);
         mStatusBarBatteryShowPercent.setOnPreferenceChangeListener(this);
+
+	setHasOptionsMenu(true);
+        mCheckPreferences = true;
+        return prefSet;
     }
 
     @Override
@@ -256,6 +284,17 @@ public class StatusBarSettings extends SettingsPreferenceFragment
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+        if  (preference == mShowFourG) {
+            boolean checked = ((SwitchPreference)preference).isChecked();
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.SHOW_FOURG, checked ? 1:0);
+            return true;
+        }
+        return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 
     private void enableStatusBarBatteryDependents(int batteryIconStyle) {
