@@ -580,9 +580,156 @@
         <item>@string/youtube</item>
         <item>@string/zedge</item>
      </string-array>
-
-      <string-array name="shortcut_icon_picker_icons" translatable="false">
-        
+ 
+     <string-array name="shortcut_icon_picker_icons" translatable="false">
+         <item>@*android:drawable/ic_shortcut_alarm</item>
+         <item>@*android:drawable/ic_shortcut_andy</item>
+         <item>@*android:drawable/ic_shortcut_battery</item>
+         <item>@*android:drawable/ic_shortcut_browser</item>
+         <item>@*android:drawable/ic_shortcut_calendar</item>
+         <item>@*android:drawable/ic_shortcut_camera</item>
+         <item>@*android:drawable/ic_shortcut_cloud</item>
+         <item>@*android:drawable/ic_shortcut_contact</item>
+         <item>@*android:drawable/ic_shortcut_directdial</item>
+         <item>@*android:drawable/ic_shortcut_directmessage</item>
+         <item>@*android:drawable/ic_shortcut_drive</item>
+         <item>@*android:drawable/ic_shortcut_dropbox</item>
+         <item>@*android:drawable/ic_shortcut_email</item>
+         <item>@*android:drawable/ic_shortcut_email2</item>
+         <item>@*android:drawable/ic_shortcut_evernote</item>
+         <item>@*android:drawable/ic_shortcut_facebook</item>
+         <item>@*android:drawable/ic_shortcut_favorite</item>
+         <item>@*android:drawable/ic_shortcut_file_browser</item>
+         <item>@*android:drawable/ic_shortcut_file_browser2</item>
+         <item>@*android:drawable/ic_shortcut_fitness</item>
+         <item>@*android:drawable/ic_shortcut_gallery</item>
+         <item>@*android:drawable/ic_shortcut_gear</item>
+         <item>@*android:drawable/ic_shortcut_google_small</item>
+         <item>@*android:drawable/ic_shortcut_gplus</item>
+         <item>@*android:drawable/ic_shortcut_gtalk</item>
+         <item>@*android:drawable/ic_shortcut_help</item>
+         <item>@*android:drawable/ic_shortcut_joystick</item>
+         <item>@*android:drawable/ic_shortcut_key</item>
+         <item>@*android:drawable/ic_shortcut_laptop</item>
+         <item>@*android:drawable/ic_shortcut_luggage</item>
+         <item>@*android:drawable/ic_shortcut_maps</item>
+         <item>@*android:drawable/ic_shortcut_market</item>
+         <item>@*android:drawable/ic_shortcut_movie</item>
+         <item>@*android:drawable/ic_shortcut_music</item>
+         <item>@*android:drawable/ic_shortcut_nav</item>
+         <item>@*android:drawable/ic_shortcut_notes</item>
+         <item>@*android:drawable/ic_shortcut_package</item>
+         <item>@*android:drawable/ic_shortcut_phone</item>
+         <item>@*android:drawable/ic_shortcut_pinterest</item>
+         <item>@*android:drawable/ic_shortcut_play</item>
+         <item>@*android:drawable/ic_shortcut_pocket</item>
+         <item>@*android:drawable/ic_shortcut_quicksettings</item>
+         <item>@*android:drawable/ic_shortcut_rss</item>
+         <item>@*android:drawable/ic_shortcut_sdcard</item>
+         <item>@*android:drawable/ic_shortcut_search</item>
+         <item>@*android:drawable/ic_shortcut_sms</item>
+         <item>@*android:drawable/ic_shortcut_tasks</item>
+         <item>@*android:drawable/ic_shortcut_terminal</item>
+         <item>@*android:drawable/ic_shortcut_transit</item>
+         <item>@*android:drawable/ic_shortcut_tv</item>
+         <item>@*android:drawable/ic_shortcut_twitter</item>
+         <item>@*android:drawable/ic_shortcut_unlock</item>
+        <item>@*android:drawable/airplay</item>
+        <item>@*android:drawable/android</item>
+        <item>@*android:drawable/badoo</item>
+        <item>@*android:drawable/battery</item>
+        <item>@*android:drawable/bluetooth</item>
+        <item>@*android:drawable/bookmarks</item>
+        <item>@*android:drawable/browser</item>
+        <item>@*android:drawable/browser2</item>
+        <item>@*android:drawable/calculator</item>
+        <item>@*android:drawable/calendar</item>
+        <item>@*android:drawable/calls</item>
+        <item>@*android:drawable/camera</item>
+        <item>@*android:drawable/chrome</item>
+        <item>@*android:drawable/clock</item>
+        <item>@*android:drawable/cnn</item>
+        <item>@*android:drawable/deezer</item>
+        <item>@*android:drawable/deezer2</item>
+        <item>@*android:drawable/dolphin2</item>
+        <item>@*android:drawable/downloads</item>
+        <item>@*android:drawable/dropbox</item>
+        <item>@*android:drawable/ebay</item>
+        <item>@*android:drawable/email</item>
+        <item>@*android:drawable/evernote</item>
+        <item>@*android:drawable/explorer</item>
+        <item>@*android:drawable/falcon</item>
+        <item>@*android:drawable/fb</item>
+        <item>@*android:drawable/flipboard</item>
+        <item>@*android:drawable/foursquare</item>
+        <item>@*android:drawable/firefox</item>
+        <item>@*android:drawable/googlebuzz</item>
+        <item>@*android:drawable/googledocs</item>
+        <item>@*android:drawable/googlewallet</item>
+        <item>@*android:drawable/line</item>
+        <item>@*android:drawable/meebo</item>
+        <item>@*android:drawable/mic</item>
+        <item>@*android:drawable/newyorktimes</item>
+        <item>@*android:drawable/rootexplorer</item>
+        <item>@*android:drawable/sim</item>
+        <item>@*android:drawable/teamviewer</item>
+        <item>@*android:drawable/totalcommander</item>
+        <item>@*android:drawable/weather</item>
+        <item>@*android:drawable/golocker</item>
+        <item>@*android:drawable/googlecurrents</item>
+        <item>@*android:drawable/googletalk</item>
+        <item>@*android:drawable/gosms</item>
+        <item>@*android:drawable/maps2</item>
+        <item>@*android:drawable/memorycleaner</item>
+        <item>@*android:drawable/navigation</item>
+        <item>@*android:drawable/pulse</item>
+        <item>@*android:drawable/shazam</item>
+        <item>@*android:drawable/swiftkey</item>
+        <item>@*android:drawable/tmobile</item>
+        <item>@*android:drawable/trash</item>
+        <item>@*android:drawable/games</item>
+        <item>@*android:drawable/gmail</item>
+        <item>@*android:drawable/docs</item>
+        <item>@*android:drawable/googledrive</item>
+        <item>@*android:drawable/googleearth</item>
+        <item>@*android:drawable/googlehangouts</item>
+        <item>@*android:drawable/googlekeep</item>
+        <item>@*android:drawable/googleplay</item>
+        <item>@*android:drawable/googletranslate</item>
+        <item>@*android:drawable/google</item>
+        <item>@*android:drawable/googleplus</item>
+        <item>@*android:drawable/imdb</item>
+        <item>@*android:drawable/instagram</item>
+        <item>@*android:drawable/lastfm</item>
+        <item>@*android:drawable/maps</item>
+        <item>@*android:drawable/messages</item>
+        <item>@*android:drawable/music</item>
+        <item>@*android:drawable/mxplayer</item>
+        <item>@*android:drawable/notepad</item>
+        <item>@*android:drawable/opera</item>
+        <item>@*android:drawable/paint</item>
+        <item>@*android:drawable/paypal</item>
+        <item>@*android:drawable/phone</item>
+        <item>@*android:drawable/picasa</item>
+        <item>@*android:drawable/pictures2</item>
+        <item>@*android:drawable/player_pro</item>
+        <item>@*android:drawable/playstation</item>
+        <item>@*android:drawable/reddit</item>
+        <item>@*android:drawable/settings</item>
+        <item>@*android:drawable/skype</item>
+        <item>@*android:drawable/soundscloud</item>
+        <item>@*android:drawable/spotifiy</item>		
+        <item>@*android:drawable/tapatalk</item>
+        <item>@*android:drawable/tunein</item>
+        <item>@*android:drawable/twitter</item>
+        <item>@*android:drawable/viber</item>
+        <item>@*android:drawable/videocamera</item>
+        <item>@*android:drawable/whatsapp</item>
+        <item>@*android:drawable/wifi</item>
+        <item>@*android:drawable/xda</item>
+        <item>@*android:drawable/yahoo</item>
+        <item>@*android:drawable/youtube</item>
+        <item>@*android:drawable/zedge</item>
      </string-array>
 
      <string-array name="shortcut_action_entries">
@@ -635,6 +782,66 @@
          <item>**ring_vib_silent**</item>
          <item>**wake_device**</item>
          <item>**null**</item>
+     </string-array>
+
+   <!-- LS Weather -->
+    <string-array name="weather_condition_icon_entries">
+        <item>@string/weather_condition_icon_monochrome_title</item>
+        <item>@string/weather_condition_icon_colored_title</item>
+        <item>@string/weather_condition_icon_vclouds_title</item>
+    </string-array>
+
+    <string-array name="weather_condition_icon_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="weather_hide_panel_entries">
+        <item>@string/weather_hide_panel_auto_title</item>
+        <item>@string/weather_hide_panel_custom_title</item>
+        <item>@string/weather_hide_panel_never_title</item>
+    </string-array>
+
+    <string-array name="weather_hide_panel_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+<!-- Lock Clock Fonts -->
+     <string-array name="lock_clock_fonts_entries">
+         <item>@string/lock_clock_font_stock</item>
+         <item>@string/lock_clock_font_bold</item>
+         <item>@string/lock_clock_font_italic</item>
+         <item>@string/lock_clock_font_bold_italic</item>
+	 <item>@string/lock_clock_font_light</item>
+         <item>@string/lock_clock_font_light_italic</item>
+	 <item>@string/lock_clock_font_thin</item>
+         <item>@string/lock_clock_font_thin_italic</item>
+         <item>@string/lock_clock_font_condensed_normal</item>
+         <item>@string/lock_clock_font_condensed_italic</item>
+         <item>@string/lock_clock_font_condensed_bold</item>
+         <item>@string/lock_clock_font_condensed_bold_italic</item>
+         <item>@string/lock_clock_font_medium_normal</item>
+         <item>@string/lock_clock_font_medium_italic</item>
+     </string-array>
+ 
+     <string-array name="lock_clock_fonts_values" translatable="false">
+         <item>0</item>
+         <item>1</item>
+         <item>2</item>
+         <item>3</item>
+         <item>4</item>
+         <item>5</item>
+         <item>6</item>
+         <item>7</item>
+         <item>8</item>
+         <item>9</item>
+         <item>10</item>
+         <item>11</item>
+	 <item>12</item>
+         <item>13</item>
      </string-array>
 
 </resources>

@@ -16,100 +16,89 @@
 
 package com.android.settings.nuclear.bloq;
 
+import com.android.internal.logging.MetricsLogger;
+
+import android.app.Activity;
+import android.content.ContentResolver;
+import android.app.WallpaperManager;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.content.res.Resources;
+import android.preference.ListPreference;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
+import android.os.UserHandle;
+import android.os.UserManager;
+import com.android.settings.chameleonos.SeekBarPreference;
+import android.preference.Preference.OnPreferenceChangeListener;
 import android.provider.Settings;
-import android.util.SparseArray;
-import android.provider.SearchIndexableResource;
-import android.content.Context;
+import android.preference.SwitchPreference;
 
 import com.android.settings.R;
-import com.android.internal.logging.MetricsLogger;
-
 import com.android.settings.SettingsPreferenceFragment;
-import com.android.settings.search.BaseSearchIndexProvider;
-import com.android.settings.search.Indexable;
-import com.android.settings.search.SearchIndexableRaw;
-import com.android.settings.Utils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+public class bloq extends SettingsPreferenceFragment  implements OnPreferenceChangeListener {
 
-import java.io.File;
-import java.io.IOException;
+ private static final String KEY_LOCKSCREEN_BLUR_RADIUS = "lockscreen_blur_radius";
+    private static final String LOCK_CLOCK_FONTS = "lock_clock_fonts";	
+    private static final String LOCKSCREEN_MAX_NOTIF_CONFIG = "lockscreen_max_notif_cofig";	
 
-public class bloq extends SettingsPreferenceFragment implements Indexable {
-/*	    private static final String KEY_SHORT = "lockscreen_shortcuts";
-    private static final String KEY_INFO = "owner_info_settings";
-    private static final String KEY_WALLP = "lockscreen_wallpaper";
-    private static final String KEY_SHORTSE = "lockscreen_shortcuts_settings";
-    private static final String KEY_TAP = "double_tap_sleep_anywhere";
+    private SeekBarPreference mBlurRadius;
+    private ListPreference mLockClockFonts;
+    private SeekBarPreference mMaxKeyguardNotifConfig;	
 
- private static SparseArray<String> allKeyTitles(Context context) {
-        final SparseArray<String> rt = new SparseArray<String>();
-        rt.put(R.string.lockscreen_shortcuts_title, KEY_SHORT);
-        rt.put(R.string.owner_info_settings_title, KEY_INFO);
-        rt.put(R.string.lockscreen_wallpaper_title, KEY_WALLP);
-        rt.put(R.string.lockscreen_targets_message, KEY_SHORTSE);
-        rt.put(R.string.double_tap_sleep_anywhere_title, KEY_TAP);
-
-        return rt;
-    }
-*/
   @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         addPreferencesFromResource(R.xml.nuclear_bloq);
+        ContentResolver resolver = getActivity().getContentResolver();
 
+	mBlurRadius = (SeekBarPreference) findPreference(KEY_LOCKSCREEN_BLUR_RADIUS);
+            mBlurRadius.setValue(Settings.System.getInt(resolver,
+                    Settings.System.LOCKSCREEN_BLUR_RADIUS, 14));
+            mBlurRadius.setOnPreferenceChangeListener(this);
+
+
+            mLockClockFonts = (ListPreference) findPreference(LOCK_CLOCK_FONTS);
+            mLockClockFonts.setValue(String.valueOf(Settings.System.getInt(
+                    resolver, Settings.System.LOCK_CLOCK_FONTS, 0)));
+            mLockClockFonts.setSummary(mLockClockFonts.getEntry());
+            mLockClockFonts.setOnPreferenceChangeListener(this);
+
+ 	mMaxKeyguardNotifConfig = (SeekBarPreference) findPreference(LOCKSCREEN_MAX_NOTIF_CONFIG);
+        int kgconf = Settings.System.getInt(resolver,
+                Settings.System.LOCKSCREEN_MAX_NOTIF_CONFIG, 5);
+        mMaxKeyguardNotifConfig.setValue(kgconf);
+        mMaxKeyguardNotifConfig.setOnPreferenceChangeListener(this);
 
     }
 
     @Override
     protected int getMetricsCategory() {
-        return 1;
+        return MetricsLogger.APPLICATION;
     }
-       /* // === Indexing ===
 
-    public static final BaseSearchIndexProvider SEARCH_INDEX_DATA_PROVIDER =
-            new BaseSearchIndexProvider() {
-
-            @Override
-            public List<SearchIndexableRaw> getRawDataToIndex(Context context, boolean enabled) {
-                final SparseArray<String> keyTitles = allKeyTitles(context);
-                final int N = keyTitles.size();
-                final List<SearchIndexableRaw> result = new ArrayList<SearchIndexableRaw>(N);
-                final Resources res = context.getResources();
-                for (int i = 0; i < N; i++) {
-                    final SearchIndexableRaw data = new SearchIndexableRaw(context);
-                    data.key = keyTitles.valueAt(i);
-                    data.title = res.getString(keyTitles.keyAt(i));
-                    data.screenTitle = res.getString(R.string.nuclear_bloq_title);
-                    result.add(data);
-                }
-                return result;
-            }
-
-
-        public List<String> getNonIndexableKeys(Context context) {
-            final ArrayList<String> rt = new ArrayList<String>();
-            if (!Utils.isVoiceCapable(context)) {
-                rt.add(KEY_SHORT);
-                rt.add(KEY_INFO);
-                rt.add(KEY_WALLP);
-                rt.add(KEY_SHORTSE);
-                rt.add(KEY_TAP);
-            }
-            return rt;
-        }
-    };
-*/
-
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object newValue)
+	{
+	ContentResolver resolver = getActivity().getContentResolver();
+	 if (preference == mBlurRadius) {
+                int width = ((Integer)newValue).intValue();
+                Settings.System.putInt(resolver,
+                        Settings.System.LOCKSCREEN_BLUR_RADIUS, width);
+                return true;
+	} else if (preference == mLockClockFonts) {
+                Settings.System.putInt(resolver, Settings.System.LOCK_CLOCK_FONTS,
+                        Integer.valueOf((String) newValue));
+                mLockClockFonts.setValue(String.valueOf(newValue));
+                mLockClockFonts.setSummary(mLockClockFonts.getEntry());
+                return true;
+	} else if (preference == mMaxKeyguardNotifConfig) {
+            int kgconf = (Integer) newValue;
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.LOCKSCREEN_MAX_NOTIF_CONFIG, kgconf);
+            return true;
+        	}
+	return false;
+	}
 }
