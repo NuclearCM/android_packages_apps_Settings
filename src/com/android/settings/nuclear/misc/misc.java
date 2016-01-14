@@ -25,21 +25,18 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import com.android.internal.logging.MetricsLogger;
 import android.os.Bundle;
 import android.os.Build;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.SystemProperties;
+import android.os.UserHandle;
 import android.preference.Preference;
+import android.preference.ListPreference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceGroup;
-import android.os.SystemProperties;
-import android.os.UserHandle;
 import android.preference.PreferenceScreen;
-import android.preference.Preference;
-import android.preference.PreferenceCategory;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
@@ -49,9 +46,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import android.preference.SwitchPreference;
 import com.android.settings.util.Helpers;
 import dalvik.system.VMRuntime;
@@ -60,6 +54,10 @@ import com.android.settings.R;
 import com.android.settings.Utils;
 import com.android.settings.SettingsPreferenceFragment;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 
 import com.android.internal.logging.MetricsLogger;
@@ -81,14 +79,18 @@ public class misc extends SettingsPreferenceFragment implements OnPreferenceChan
 	private static final String MULTI_WINDOW_SYSTEM_PROPERTY = "persist.sys.debug.multi_window";
 	private static final String RESTART_SYSTEMUI = "restart_systemui";
     private static final String COLUM_NUMBER = "colum_number";
-    private static final String SCREENSHOT_SOUNDS = "screenshot_sounds";
+
+    private static final String MEDIA_SCANNER_ON_BOOT = "media_scanner_on_boot";
  	
     private static int COLUM;
 
 	private SwitchPreference mEnableMultiWindow;
 	private Preference mRestartSystemUI;
         private SwitchPreference mColumNumber;
-        private SwitchPreference mScreenshotSounds;
+
+        private ListPreference mMSOB;
+
+	private final ArrayList<Preference> mAllPrefs = new ArrayList<Preference>();
 
   @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -100,7 +102,12 @@ public class misc extends SettingsPreferenceFragment implements OnPreferenceChan
         mEnableMultiWindow = (SwitchPreference) findPreference(ENABLE_MULTI_WINDOW_KEY);
         mRestartSystemUI = findPreference(RESTART_SYSTEMUI);
         mColumNumber = (SwitchPreference) findPreference(COLUM_NUMBER);
-        mScreenshotSounds = (SwitchPreference) findPreference(SCREENSHOT_SOUNDS);
+
+
+        mMSOB = (ListPreference) findPreference(MEDIA_SCANNER_ON_BOOT);
+        mAllPrefs.add(mMSOB);
+        mMSOB.setOnPreferenceChangeListener(this);
+        updateMSOBOptions();
 
     }
 
@@ -152,14 +159,6 @@ public class misc extends SettingsPreferenceFragment implements OnPreferenceChan
                 Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.COLUM_NUMBER, 1);
             }
-        }else if (preference == mScreenshotSounds) {
- 	      if (mScreenshotSounds.isChecked()) {
-                Settings.System.putInt(getActivity().getContentResolver(),
-                    Settings.System.SCREENSHOT_SOUNDS, 2);
-            }else{
-                Settings.System.putInt(getActivity().getContentResolver(),
-                    Settings.System.SCREENSHOT_SOUNDS, 1);
-            }
  	}else if (preference == mRestartSystemUI) {
            Helpers.restartSystemUI();  
 	}else {
@@ -168,9 +167,14 @@ public class misc extends SettingsPreferenceFragment implements OnPreferenceChan
         return false;
     }
 
-    public boolean onPreferenceChange(Preference preference, Object value) {
-         return true;
-    }
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+     ContentResolver resolver = getActivity().getContentResolver();
+	if (preference == mMSOB) {
+            writeMSOBOptions(newValue);
+            return true;
+	}
+        return false;
+     } 
 
            /* // === Indexing ===
 
@@ -203,4 +207,22 @@ public class misc extends SettingsPreferenceFragment implements OnPreferenceChan
         }
     };
 */
+   private void resetMSOBOptions() {
+        Settings.System.putInt(getActivity().getContentResolver(),
+                Settings.System.MEDIA_SCANNER_ON_BOOT, 0);
+    }
+
+    private void writeMSOBOptions(Object newValue) {
+        Settings.System.putInt(getActivity().getContentResolver(),
+                Settings.System.MEDIA_SCANNER_ON_BOOT,
+                Integer.valueOf((String) newValue));
+        updateMSOBOptions();
+    }
+
+    private void updateMSOBOptions() {
+        int value = Settings.System.getInt(getActivity().getContentResolver(),
+                Settings.System.MEDIA_SCANNER_ON_BOOT, 0);
+        mMSOB.setValue(String.valueOf(value));
+        mMSOB.setSummary(mMSOB.getEntry());
+     }
 }

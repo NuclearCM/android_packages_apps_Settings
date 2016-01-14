@@ -5,7 +5,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings"
     android:title="@string/misc_category_title" >
-
+        <!-- multi_window -->
     <Preference
             android:key="warning_multi_window"
             android:summary="@string/warning_multi_window_text"
@@ -16,25 +16,65 @@
             android:title="@string/enable_multi_window"
             android:summary="@string/enable_multi_window_summary"/> 
 
+        <!-- colum_number -->
         <SwitchPreference
             android:key="colum_number"
             android:title="@string/colum_number_title"
             android:summary="@string/colum_number_summary"
             android:defaultValue="true"/> 
 
-    <!-- ScreenShot sounds -->
-    <SwitchPreference
-            android:key="screenshot_sounds"
-            android:title="@string/screenshot_sounds_title"
+
+        <!-- Battery saver color bar -->
+    <com.android.settings.cyanogenmod.SystemSettingSwitchPreference
+            android:key="battery_save_mode_color"
+            android:title="@string/battery_saver_color_title"
+            android:summary="@string/battery_saver_color_summary"
             android:defaultValue="true" />
 
+        <!-- Disable Fc notifications -->
+    <com.android.settings.cyanogenmod.SystemSettingSwitchPreference
+        android:key="disable_fc_notifications"
+        android:title="@string/disable_fc_notifications_title"
+        android:summary="@string/disable_fc_notifications_summary"
+        android:defaultValue="false" />
+
+        <!-- Sound Advanced options -->
+        <PreferenceScreen
+                android:key="advanced_sound_settings"
+                android:title="@string/advanced_sound_title"
+                android:persistent="false"
+                android:fragment="com.android.settings.nuclear.SoundSettings" />
+
+        <!-- Conect player with headset -->
+     <com.android.settings.cyanogenmod.SystemSettingSwitchPreference
+        android:key="headset_connect_player"
+        android:title="@string/headset_connect_player_title"
+        android:summary="@string/headset_connect_player_summary"
+        android:defaultValue="false" />
+
+        <!-- Meddia Scanner on Boot -->
+      <ListPreference
+        android:key="media_scanner_on_boot"
+        android:title="@string/media_scanner_on_boot_title"
+        android:persistent="false"
+        android:entries="@array/media_scanner_on_boot_entries"
+        android:entryValues="@array/media_scanner_on_boot_values" />
+
+
     <!-- System APP Remover -->
-   <!-- <PreferenceScreen
+  <PreferenceScreen
             android:id="@+id/system_app_remover"
             android:title="@string/system_app_remover"
-            android:fragment="com.android.settings.nuclear.misc.SystemappRemover" /> -->
+            android:fragment="com.android.settings.nuclear.misc.SystemappRemover" />
 
+       <!-- Logcat or GTFO -->
+	<PreferenceScreen
+            android:key="drill"
+            android:fragment="com.android.settings.nuclear.nucleardrill"
+            android:title="@string/nuclear_drill_title"
+            />
 
+    <!-- SystemUI Restart -->
    <!-- <Preference android:key="restart_systemui"
         android:title="@string/restart_systemui" /> -->
 
