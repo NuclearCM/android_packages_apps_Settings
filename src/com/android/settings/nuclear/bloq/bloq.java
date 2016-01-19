@@ -19,7 +19,6 @@ package com.android.settings.nuclear.bloq;
 import com.android.internal.logging.MetricsLogger;
 
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.app.WallpaperManager;
 import android.content.Intent;
 import android.preference.ListPreference;
@@ -39,11 +38,9 @@ import com.android.settings.SettingsPreferenceFragment;
 
 public class bloq extends SettingsPreferenceFragment  implements OnPreferenceChangeListener {
 
- private static final String KEY_LOCKSCREEN_BLUR_RADIUS = "lockscreen_blur_radius";
     private static final String LOCK_CLOCK_FONTS = "lock_clock_fonts";	
     private static final String LOCKSCREEN_MAX_NOTIF_CONFIG = "lockscreen_max_notif_cofig";	
 
-    private SeekBarPreference mBlurRadius;
     private ListPreference mLockClockFonts;
     private SeekBarPreference mMaxKeyguardNotifConfig;	
 
@@ -51,13 +48,6 @@ public class bloq extends SettingsPreferenceFragment  implements OnPreferenceCha
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.nuclear_bloq);
-        ContentResolver resolver = getActivity().getContentResolver();
-
-	mBlurRadius = (SeekBarPreference) findPreference(KEY_LOCKSCREEN_BLUR_RADIUS);
-            mBlurRadius.setValue(Settings.System.getInt(resolver,
-                    Settings.System.LOCKSCREEN_BLUR_RADIUS, 14));
-            mBlurRadius.setOnPreferenceChangeListener(this);
-
 
             mLockClockFonts = (ListPreference) findPreference(LOCK_CLOCK_FONTS);
             mLockClockFonts.setValue(String.valueOf(Settings.System.getInt(
@@ -82,12 +72,7 @@ public class bloq extends SettingsPreferenceFragment  implements OnPreferenceCha
     public boolean onPreferenceChange(Preference preference, Object newValue)
 	{
 	ContentResolver resolver = getActivity().getContentResolver();
-	 if (preference == mBlurRadius) {
-                int width = ((Integer)newValue).intValue();
-                Settings.System.putInt(resolver,
-                        Settings.System.LOCKSCREEN_BLUR_RADIUS, width);
-                return true;
-	} else if (preference == mLockClockFonts) {
+	if (preference == mLockClockFonts) {
                 Settings.System.putInt(resolver, Settings.System.LOCK_CLOCK_FONTS,
                         Integer.valueOf((String) newValue));
                 mLockClockFonts.setValue(String.valueOf(newValue));
