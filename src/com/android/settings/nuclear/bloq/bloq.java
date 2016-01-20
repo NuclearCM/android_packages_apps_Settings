@@ -21,6 +21,7 @@ import com.android.internal.logging.MetricsLogger;
 import android.app.Activity;
 import android.app.WallpaperManager;
 import android.content.Intent;
+import android.content.ContentResolver;
 import android.preference.ListPreference;
 import android.net.Uri;
 import android.os.Bundle;
@@ -48,6 +49,8 @@ public class bloq extends SettingsPreferenceFragment  implements OnPreferenceCha
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.nuclear_bloq);
+	ContentResolver resolver = getActivity().getContentResolver();
+ 
 
             mLockClockFonts = (ListPreference) findPreference(LOCK_CLOCK_FONTS);
             mLockClockFonts.setValue(String.valueOf(Settings.System.getInt(

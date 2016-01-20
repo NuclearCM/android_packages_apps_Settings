@@ -25,7 +25,7 @@
                 <categories android:name="android.settings.SYSTEM_UPDATE_SETTINGS" />
                 <categories android:name="com.android.settings.SHORTCUT" />
             </intent>
-        </PreferenceScreen>
+        </PreferenceScreen> -->
  
 	<!-- NRR Logotype -->
 	<PreferenceScreen android:key="nuclear_logo"
