@@ -57,8 +57,10 @@ public class StatusBarSettings extends SettingsPreferenceFragment
 
     private static final String TAG = "StatusBar";
 
+    private static final String STATUS_BAR_QUICK_QS_PULLDOWN = "qs_quick_pulldown";
     private static final String SHOW_FOURG = "show_fourg";
     private SwitchPreference mShowFourG;
+    private ListPreference mQuickPulldown;
 
    /* private static final String STATUS_BAR_CLOCK_STYLE = "status_bar_clock";
     private static final String STATUS_BAR_AM_PM = "status_bar_am_pm";
@@ -103,6 +105,24 @@ public class StatusBarSettings extends SettingsPreferenceFragment
         mStatusBarDate = (ListPreference) findPreference(STATUS_BAR_DATE);
         mStatusBarDateStyle = (ListPreference) findPreference(STATUS_BAR_DATE_STYLE);
         mStatusBarDateFormat = (ListPreference) findPreference(STATUS_BAR_DATE_FORMAT);*/
+
+
+        Resources res = getResources();
+	mQuickPulldown = (ListPreference) findPreference(STATUS_BAR_QUICK_QS_PULLDOWN);
+int quickPulldown = CMSettings.System.getInt(resolver,
+                CMSettings.System.STATUS_BAR_QUICK_QS_PULLDOWN, 1);
+        mQuickPulldown.setValue(String.valueOf(quickPulldown));
+        if (quickPulldown == 0) {
+            // quick pulldown deactivated
+            mQuickPulldown.setSummary(res.getString(R.string.status_bar_quick_qs_pulldown_off));
+        } else {
+            String direction = res.getString(quickPulldown == 2
+                    ? R.string.status_bar_quick_qs_pulldown_left
+                    : R.string.status_bar_quick_qs_pulldown_right);
+            mQuickPulldown.setSummary(
+                    res.getString(R.string.status_bar_quick_qs_pulldown_summary, direction));
+        }
+        mQuickPulldown.setOnPreferenceChangeListener(this);
 
 	mShowFourG = (SwitchPreference) findPreference(SHOW_FOURG);
         if (NuclearUtils.isWifiOnly(getActivity())) {
@@ -194,6 +214,7 @@ public class StatusBarSettings extends SettingsPreferenceFragment
     public boolean onPreferenceChange(Preference preference, Object newValue) {
 	/*AlertDialog dialog;*/
         ContentResolver resolver = getActivity().getContentResolver();
+	Resources res = getResources();
        /* if (preference == mStatusBarClock) {
             int clockStyle = Integer.parseInt((String) newValue);
             int index = mStatusBarClock.findIndexOfValue((String) newValue);
@@ -281,6 +302,21 @@ public class StatusBarSettings extends SettingsPreferenceFragment
                     resolver, CMSettings.System.STATUS_BAR_SHOW_BATTERY_PERCENT, batteryShowPercent);
             mStatusBarBatteryShowPercent.setSummary(
                     mStatusBarBatteryShowPercent.getEntries()[index]);
+            return true;
+	} else if (preference == mQuickPulldown) {
+            int quickPulldown = Integer.valueOf((String) newValue);
+            CMSettings.System.putInt(resolver, CMSettings.System.STATUS_BAR_QUICK_QS_PULLDOWN,
+                    quickPulldown);
+            if (quickPulldown == 0) {
+                // quick pulldown deactivated
+                mQuickPulldown.setSummary(res.getString(R.string.status_bar_quick_qs_pulldown_off));
+            } else {
+                String direction = res.getString(quickPulldown == 2
+                        ? R.string.status_bar_quick_qs_pulldown_left
+                        : R.string.status_bar_quick_qs_pulldown_right);
+                mQuickPulldown.setSummary(
+                        res.getString(R.string.status_bar_quick_qs_pulldown_summary, direction));
+            }
             return true;
         }
         return false;
