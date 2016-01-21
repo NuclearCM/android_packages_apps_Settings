@@ -37,6 +37,8 @@ import com.android.settings.SettingsPreferenceFragment;
 import com.android.internal.logging.MetricsLogger;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 public class AnimationSettings extends SettingsPreferenceFragment
@@ -45,6 +47,7 @@ public class AnimationSettings extends SettingsPreferenceFragment
     private static final String KEY_TOAST_ANIMATION = "toast_animation";
     private static final String KEY_LISTVIEW_ANIMATION = "listview_animation";
     private static final String KEY_LISTVIEW_INTERPOLATOR = "listview_interpolator";
+    private static final String POWER_MENU_ANIMATIONS = "power_menu_animations";
 
     private static final String TOAST_ICON = "toast_icon";
 
@@ -52,6 +55,9 @@ public class AnimationSettings extends SettingsPreferenceFragment
     private ListPreference mListViewAnimation;
     private ListPreference mListViewInterpolator;
     private SwitchPreference mToastIcon;
+    private ListPreference mScrollingCachePref;
+    private ListPreference mPowerMenuAnimations;
+
 
     @Override
     protected int getMetricsCategory() {
@@ -92,6 +98,12 @@ public class AnimationSettings extends SettingsPreferenceFragment
         mListViewInterpolator.setSummary(mListViewInterpolator.getEntry());
         mListViewInterpolator.setOnPreferenceChangeListener(this);
         mListViewInterpolator.setEnabled(listviewanimation > 0);
+
+        mPowerMenuAnimations = (ListPreference) findPreference(POWER_MENU_ANIMATIONS);
+        mPowerMenuAnimations.setValue(String.valueOf(Settings.System.getInt(
+                getContentResolver(), Settings.System.POWER_MENU_ANIMATIONS, 0)));
+        mPowerMenuAnimations.setSummary(mPowerMenuAnimations.getEntry());
+        mPowerMenuAnimations.setOnPreferenceChangeListener(this);
     }
 
     @Override
@@ -127,9 +139,13 @@ public class AnimationSettings extends SettingsPreferenceFragment
             boolean value = (Boolean) newValue;
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.TOAST_ICON, value ? 1 : 0);
+        } else if (preference == mPowerMenuAnimations) {
+            Settings.System.putInt(getContentResolver(), Settings.System.POWER_MENU_ANIMATIONS,
+                    Integer.valueOf((String) newValue));
+            mPowerMenuAnimations.setValue(String.valueOf(newValue));
+            mPowerMenuAnimations.setSummary(mPowerMenuAnimations.getEntry());
             return true;
         }
-        
         return false;
     }
 }
