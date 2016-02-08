@@ -403,10 +403,10 @@
         <item>reboot</item>
         <item>screenshot</item>
         <item>screenrecord</item>
-        <item>profile</item>
         <item>airplane</item>
         <item>users</item>
         <item>bugreport</item>
+        <item>silent</item>
     </string-array>
 
     <!-- Gamma calibration descriptors, deliberately empty as string values populated via
