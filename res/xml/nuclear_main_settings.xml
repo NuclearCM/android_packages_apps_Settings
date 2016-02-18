@@ -16,54 +16,136 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings"
     android:title="@string/nuclear_settings_title" >
-         
-    
-<!-- Personalizacion -->
-        <PreferenceScreen
-                android:key="perso"
-                android:id="@+id/nuclear_personalizacion_settings"
-                android:icon="@drawable/ic_settings_interface"
-                android:fragment="com.android.settings.nuclear.personalizacion.personalizacion"
-                android:title="@string/nuclear_perso_title">
-         </PreferenceScreen>
 
-<!-- Rendimiento -->
+<!-- Personalizacion -->
+        <PreferenceCategory
+                android:key="perso"
+                android:title="@string/nuclear_perso_title" >
+        </PreferenceCategory>
+
+        <!-- Status bar -->
         <PreferenceScreen
-                android:key="rend"
-                android:id="@+id/nuclear_rend_settings"
-                android:icon="@drawable/ic_settings_performance"
-                android:fragment="com.android.settings.nuclear.rend.rend"
-                android:title="@string/nuclear_cat_title">
-         </PreferenceScreen>
+		android:key="statusbar_settings"
+                android:id="@+id/status_bar_settings"
+                android:title="@string/status_bar_title"
+                android:fragment="com.android.settings.cyanogenmod.StatusBarSettings"
+                android:layout="@layout/preference_nuclearextra_status"
+                />
+        <!-- recents -->
+        <PreferenceScreen
+	    android:key="recents_settings"
+            android:id="@+id/recents_settings"
+            android:fragment="com.android.settings.nuclear.RecentsSettings"
+            android:title="@string/recents_settings_title"
+            android:layout="@layout/preference_nuclearextra_recents"
+            />
+
+        <!-- Gestos -->
+        <PreferenceScreen
+                android:key="gestos"
+                android:id="@+id/gestos_settings"
+                android:layout="@layout/preference_nuclearextra_gestures"
+                android:fragment="com.android.settings.nuclear.GestosSettings"
+                android:title="@string/gestos_settings_title">
+        </PreferenceScreen>
+
+        <!-- Animation Settings -->
+        <PreferenceScreen
+            android:key="animation_settings"
+            android:title="@string/animation_title"
+            android:fragment="com.android.settings.nuclear.animation.AnimationSettings" 
+            android:layout="@layout/preference_nuclearextra_anim">
+        </PreferenceScreen> 
+
+<!-- Navigation -->
+        <PreferenceCategory
+                android:key="navigation"
+                android:title="@string/navigation_settings_title" >
+        </PreferenceCategory>
+	<!-- Buttons -->
+        <PreferenceScreen
+		android:key="buttons_settings"
+                android:id="@+id/button_settings"
+                android:title="@string/button_pref_title"
+                android:fragment="com.android.settings.ButtonSettings"
+                android:layout="@layout/preference_nuclearextra_buttons"
+                />
+
+        <!-- App sidebar -->
+        <PreferenceScreen
+            android:key="app_sidebar"
+            android:fragment="com.android.settings.nuclear.AppSidebar"
+            android:title="@string/app_sidebar_title"
+            android:layout="@layout/preference_nuclearextra_appsidebar" 
+            />
+                
+        <!--PA Pie Control -->
+        <PreferenceScreen
+             android:key="pa_pie_control"
+             android:title="@string/pa_pie_control_title"
+             android:fragment="com.android.settings.paranoid.PieControl"
+             android:layout="@layout/preference_nuclearextra_papie" 
+             />
+
+
 
 <!-- seguridad aplicaciones -->
-        <PreferenceScreen
+        <PreferenceCategory
                 android:key="secur"
-                android:id="@+id/nuclear_segapp_settings"
-                android:icon="@drawable/ic_settings_privacy"
-                android:fragment="com.android.settings.nuclear.segapp.segapp"
-                android:title="@string/app_security_title">
-         </PreferenceScreen>
+                android:title="@string/nuclear_security_title" >
+        </PreferenceCategory>
 
-<!-- Bloqueo Pantalla -->
+        <!-- CyanogenMod Privacy Settings -->
+        <!-- This is the 'real' Privacy items and includes Privacy Guard, Blacklist & WhisperPush -->
+        <PreferenceScreen
+		android:key="privacy_settings"
+                android:id="@+id/privacy_settings_cyanogenmod"
+                android:title="@string/privacy_settings_cyanogenmod_title"
+                android:fragment="com.android.settings.cyanogenmod.PrivacySettings"
+                android:layout="@layout/preference_nuclearextra_privacy"
+                />
+
+	<!-- Bloqueo Pantalla -->
         <PreferenceScreen
 		android:key="bloq"
                 android:id="@+id/nuclear_bloq_settings"
                 android:title="@string/nuclear_bloq_title"
                 android:fragment="com.android.settings.nuclear.bloq.bloq"
-                android:icon="@drawable/ic_settings_security">
+                android:layout="@layout/preference_nuclearextra_lock">
          </PreferenceScreen>
- 
+
 <!-- Miscelanea -->
+         <PreferenceCategory
+                android:key="misctitle"
+                android:title="@string/others_category_title" >
+        </PreferenceCategory>
+	<!-- Miscelanea -->
         <PreferenceScreen
-                android:key="misc"
+                android:key="others"
                 android:id="@+id/nuclear_misc_settings"
-                android:icon="@drawable/ic_misc_exposed"
+                android:layout="@layout/preference_nuclearextra_misc"
                 android:fragment="com.android.settings.nuclear.misc.misc"
                 android:title="@string/misc_category_title">
          </PreferenceScreen>
 
+<!-- Rendimiento -->
+	 <PreferenceScreen
+	    	android:key="key_synapse"
+	       	android:title="@string/synapse_title"
+	     	android:layout="@layout/preference_nuclearextra_performance">
+	        <intent android:targetPackage="com.af.synapse"
+	    		android:action="android.intent.action.MAIN"
+	         	android:targetClass="com.af.synapse.MainActivity" >
+	        </intent>  
+	    </PreferenceScreen>
 
-
+	<PreferenceScreen
+		android:key="key_kernel_adiutor"
+		android:title="@string/kernel_adiutor_title"
+		android:layout="@layout/preference_nuclearextra_performance">
+		<intent android:action="android.intent.action.MAIN"
+			android:targetPackage="com.grarak.kerneladiutor"
+			android:targetClass="com.grarak.kerneladiutor.MainActivity" />
+	</PreferenceScreen>
 
 </PreferenceScreen>

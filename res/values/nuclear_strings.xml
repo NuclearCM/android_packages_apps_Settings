@@ -25,7 +25,8 @@
     <string name="misc_category_title">Miscellaneous</string>
 
     <string name="app_security_title">App security</string>
-
+    <string name="others_category_title">More Options...</string>
+    <string name="nuclear_security_title">Security</string>
     <!-- Status bar -->
     <string name="status_bar_title">Status bar</string>
     <string name="status_bar_style_title">Style</string>
