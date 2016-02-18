@@ -139,6 +139,7 @@ public class AnimationSettings extends SettingsPreferenceFragment
             boolean value = (Boolean) newValue;
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.TOAST_ICON, value ? 1 : 0);
+	    return true;
         } else if (preference == mPowerMenuAnimations) {
             Settings.System.putInt(getContentResolver(), Settings.System.POWER_MENU_ANIMATIONS,
                     Integer.valueOf((String) newValue));
