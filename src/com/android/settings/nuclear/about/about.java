@@ -106,7 +106,7 @@ private static final String NS_ROM_SHARE = "share";
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         if (preference == mForumUrl) {
-            launchUrl("http://forum.xda-developers.com/oneplus-one/development/nuclearslim-t3133741");
+            launchUrl("http://forum.xda-developers.com/oneplus-one/development/rom-kernel-nuclearrom-reborn-t3266738");
         } else if (preference == mKernelUrl) {
             launchUrl("http://forum.xda-developers.com/oneplus-one/development/radioactivekernel-team-nuclear-t3119830");
         } else if (preference == mSourceUrl) {

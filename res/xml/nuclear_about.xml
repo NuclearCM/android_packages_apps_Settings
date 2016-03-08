@@ -54,28 +54,50 @@
 		<!-- Equipo Nuclear -->		
 	<PreferenceCategory
         android:key="teamnuclear"
-        android:title="@string/team_nuclear"> 
-        
-        <PreferenceScreen android:key="moludo"
-        android:title="@string/moludo" />         
-        <PreferenceScreen android:key="lozo"
-        android:title="@string/lozo" />
-        <PreferenceScreen android:key="acuicultor"
-        android:title="@string/acuicultor" />
-        <PreferenceScreen android:key="evuz"
-        android:title="@string/evuz" />
-        <PreferenceScreen android:key="chris"
-        android:title="@string/chris" />
-        <PreferenceScreen android:key="victoria"
-        android:title="@string/victoria" />  
-        <PreferenceScreen android:key="sonia"
-        android:title="@string/sonia" />              
-        <PreferenceScreen android:key="arma"
-        android:title="@string/arma" />
-        <PreferenceScreen android:key="juan"
-        android:title="@string/juan" />
-        <PreferenceScreen android:key="juanlu"
-        android:title="@string/juanlu" />
+        android:title="@string/team_nuclear" 
+        android:layout="@layout/preference_nuclearextra_teamabout">
     </PreferenceCategory>
+
+		<PreferenceCategory
+        	android:key="devs"
+        	android:title="@string/devs_title">
+  
+        	<PreferenceScreen android:key="moludo"
+        	android:title="@string/moludo" />         
+        	<PreferenceScreen android:key="lozo"
+        	android:title="@string/lozo" />
+        	<PreferenceScreen android:key="acuicultor"
+        	android:title="@string/acuicultor" />
+		
+		</PreferenceCategory>
+
+		<PreferenceCategory
+        	android:key="maintainers"
+        	android:title="@string/maintainer_title">
+  
+        	<PreferenceScreen android:key="chris"
+        	android:title="@string/chris" />
+        	<PreferenceScreen android:key="victoria"
+        	android:title="@string/victoria" />  
+		
+		</PreferenceCategory>
+
+		<PreferenceCategory
+        	android:key="testers"
+        	android:title="@string/testers_title">
+        	<PreferenceScreen android:key="sonia"
+       	 	android:title="@string/sonia" />              
+       		<PreferenceScreen android:key="arma"
+        	android:title="@string/arma" />
+        	<PreferenceScreen android:key="evuz"
+        	android:title="@string/evuz" />
+        	<PreferenceScreen android:key="dtr"
+        	android:title="@string/dtr" />
+        	<PreferenceScreen android:key="Santos"
+        	android:title="@string/santos" />
+        	<PreferenceScreen android:key="alfo"
+        	android:title="@string/alfo" />
+		</PreferenceCategory>
+
             
 </PreferenceScreen>
