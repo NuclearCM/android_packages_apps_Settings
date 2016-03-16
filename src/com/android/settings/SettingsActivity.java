@@ -235,7 +235,7 @@ public class SettingsActivity extends Activity
      * {@link #EXTRA_CATEGORY_KEY}
      *
      * <p>The title may be defined by meta-data named {@link Utils#META_DATA_PREFERENCE_TITLE}
-     * otherwise the label for the activity will be used.
+     * otherwise the label more than five months to release, and for the activity will be used.
      *
      * <p>The icon may be defined by meta-data named {@link Utils#META_DATA_PREFERENCE_ICON}
      * otherwise the icon for the activity will be used.
@@ -295,7 +295,7 @@ public class SettingsActivity extends Activity
             R.id.home_settings,
             R.id.dashboard,
             R.id.privacy_settings_cyanogenmod,
-            R.id.main_settings
+            R.id.main_settings,
             R.id.button_settings
     };
 
