@@ -189,6 +189,7 @@
                     android:targetClass="com.cyanogenmod.settings.device.BluetoothInputSettings" />
         </dashboard-tile>
 
+
         <!-- Battery -->
         <dashboard-tile
                 android:id="@+id/battery_settings"
