@@ -16,6 +16,7 @@
 
 package com.android.settings.applications;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AppOpsManager;
 import android.app.Fragment;
@@ -28,7 +29,12 @@ import android.content.pm.PermissionGroupInfo;
 import android.content.pm.PermissionInfo;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.net.NetworkPolicyManager;
 import android.os.Bundle;
+import android.os.IDeviceIdleController;
+import android.os.RemoteException;
+import android.os.ServiceManager;
+import android.util.ArraySet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,7 +53,12 @@ import com.android.settings.R;
 import com.android.settings.SettingsActivity;
 import com.android.settings.Utils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import static android.net.NetworkPolicyManager.POLICY_REJECT_ON_DATA;
+import static android.net.NetworkPolicyManager.POLICY_REJECT_ON_WLAN;
 
 public class AppOpsDetails extends InstrumentedFragment {
     static final String TAG = "AppOpsDetails";
@@ -61,6 +72,7 @@ public class AppOpsDetails extends InstrumentedFragment {
     private LayoutInflater mInflater;
     private View mRootView;
     private LinearLayout mOperationsSection;
+    private NetworkPolicyManager mPolicyManager;
 
     private final int MODE_ALLOWED = 0;
     private final int MODE_IGNORED = 1;
@@ -137,6 +149,20 @@ public class AppOpsDetails extends InstrumentedFragment {
 
         Resources res = getActivity().getResources();
 
+        final IDeviceIdleController iDeviceIdleController = IDeviceIdleController.Stub.asInterface(
+                ServiceManager.getService(Context.DEVICE_IDLE_CONTROLLER));
+        List<String> allowInPowerSave;
+        if (iDeviceIdleController != null) {
+            try {
+                allowInPowerSave = Arrays.asList(iDeviceIdleController.getSystemPowerWhitelist());
+            } catch (RemoteException e) {
+                Log.e(TAG, "couldn't get system power white list", e);
+                allowInPowerSave = new ArrayList<>();
+            }
+        } else {
+            allowInPowerSave = new ArrayList<>();
+        }
+
         mOperationsSection.removeAllViews();
         String lastPermGroup = "";
         boolean isPlatformSigned = isPlatformSigned();
@@ -170,21 +196,40 @@ public class AppOpsDetails extends InstrumentedFragment {
                     } catch (NameNotFoundException e) {
                     }
                 }
-                ((TextView)view.findViewById(R.id.op_name)).setText(
-                        entry.getSwitchText(mState));
-                ((TextView)view.findViewById(R.id.op_counts)).setText(
-                        entry.getCountsText(res));
-                ((TextView)view.findViewById(R.id.op_time)).setText(
-                        entry.getTimeText(res, true));
 
                 Spinner sp = (Spinner) view.findViewById(R.id.spinnerWidget);
-                sp.setVisibility(View.INVISIBLE);
+                sp.setVisibility(View.GONE);
                 Switch sw = (Switch) view.findViewById(R.id.switchWidget);
-                sw.setVisibility(View.INVISIBLE);
+                sw.setVisibility(View.GONE);
 
                 final int switchOp = AppOpsManager.opToSwitch(firstOp.getOp());
                 int mode = mAppOps.checkOp(switchOp, entry.getPackageOps().getUid(),
                         entry.getPackageOps().getPackageName());
+
+                final TextView opNameText = (TextView) view.findViewById(R.id.op_name);
+                final TextView opCountText = (TextView) view.findViewById(R.id.op_counts);
+                final TextView opTimeText = (TextView) view.findViewById(R.id.op_time);
+
+                opNameText.setText(entry.getSwitchText(mState));
+
+                if (switchOp == AppOpsManager.OP_WAKE_LOCK
+                        && allowInPowerSave.contains(entry.getPackageOps().getPackageName())) {
+                    // sooper special case; app is marked to be allowed in power save; it is
+                    // probably critical to functionality, don't allow user to change it, because
+                    // we'll ignore it either way
+                    sw.setVisibility(View.VISIBLE);
+                    sw.setChecked(true);
+                    sw.setEnabled(false);
+
+                    opCountText.setVisibility(View.GONE);
+                    opTimeText.setText(R.string.app_ops_disabled_by_optimization);
+
+                    continue;
+                }
+
+                opCountText.setText(entry.getCountsText(res));
+                opTimeText.setText(entry.getTimeText(res, true));
+
                 sp.setSelection(modeToPosition(mode));
                 sp.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
                     boolean firstMode = true;
@@ -226,7 +271,50 @@ public class AppOpsDetails extends InstrumentedFragment {
             }
         }
 
+        if (mPm.checkPermission(Manifest.permission.INTERNET, mPackageInfo.packageName)
+                == PackageManager.PERMISSION_GRANTED) {
+            TextView internetCategory = (TextView) mInflater.inflate(
+                    R.layout.preference_category_material, null);
+            internetCategory.setText(R.string.privacy_guard_internet_category);
+            mOperationsSection.addView(internetCategory);
+
+            addInternetSwitch(POLICY_REJECT_ON_WLAN);
+            addInternetSwitch(POLICY_REJECT_ON_DATA);
+        }
+
         return true;
+    }
+
+    private void addInternetSwitch(final int policy) {
+        // Add internet category permissions
+        final View view = mInflater.inflate(R.layout.app_ops_details_item,
+                mOperationsSection, false);
+        mOperationsSection.addView(view);
+
+        ((TextView)view.findViewById(R.id.op_name)).setText(
+                policy == POLICY_REJECT_ON_DATA ? R.string.restrict_app_cellular_title :
+                        R.string.restrict_app_wlan_title);
+        view.findViewById(R.id.op_counts).setVisibility(View.INVISIBLE);
+        view.findViewById(R.id.op_time).setVisibility(View.INVISIBLE);
+        view.findViewById(R.id.spinnerWidget).setVisibility(View.GONE);
+
+        Switch sw = (Switch) view.findViewById(R.id.switchWidget);
+        sw.setChecked((mPolicyManager.getUidPolicy(
+                mPackageInfo.applicationInfo.uid) & policy) != 0);
+        sw.setTag(policy);
+        sw.setVisibility(View.VISIBLE);
+        sw.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView,
+                                         boolean isChecked) {
+                if (isChecked) {
+                    mPolicyManager.addUidPolicy(mPackageInfo.applicationInfo.uid,
+                            policy);
+                } else {
+                    mPolicyManager.removeUidPolicy(mPackageInfo.applicationInfo.uid,
+                            policy);
+                }
+            }
+        });
     }
 
     private void setIntentAndFinish(boolean finish, boolean appChanged) {
@@ -245,6 +333,7 @@ public class AppOpsDetails extends InstrumentedFragment {
         mPm = getActivity().getPackageManager();
         mInflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mAppOps = (AppOpsManager)getActivity().getSystemService(Context.APP_OPS_SERVICE);
+        mPolicyManager = NetworkPolicyManager.from(getActivity());
 
         retrieveAppEntry();
 
